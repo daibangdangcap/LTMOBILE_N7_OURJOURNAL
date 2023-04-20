@@ -7,6 +7,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import android.widget.Toolbar;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+import com.example.journal.Adapter.PostAdapter;
+import com.example.journal.Model.Post;
 import com.example.journal.fragment.FriendFragment;
 import com.example.journal.fragment.FriendRequestFragment;
 import com.example.journal.fragment.PostingFragment;
@@ -26,7 +30,11 @@ import com.example.journal.fragment.SettingFragment;
 import com.example.journal.fragment.UserpageFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class MainPageActivity extends AppCompatActivity {
+    ArrayList<Post> lsPost;
+    RecyclerView rvlPost;
     NavigationView navigationView;
     Toolbar toolbar;
     ImageView imgOurJournal;
@@ -46,6 +54,12 @@ public class MainPageActivity extends AppCompatActivity {
         bottomNavigation=(AHBottomNavigation) findViewById(R.id.bottom_navigation);
         setBottomNavigation(bottomNavigation);
         initMenu();
+        rvlPost=findViewById(R.id.rvPost);
+        LoadData();
+        PostAdapter postAdapter=new PostAdapter(lsPost);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        rvlPost.setAdapter(postAdapter);
+        rvlPost.setLayoutManager(linearLayoutManager);
     }
     void initMenu()
     {
@@ -101,6 +115,7 @@ public class MainPageActivity extends AppCompatActivity {
         imgOurJournal.setVisibility(View.INVISIBLE);
         topBar.setVisibility(View.INVISIBLE);
         bottomNavigation.setVisibility(View.INVISIBLE);
+        rvlPost.setVisibility(View.INVISIBLE);
     }
     void setBottomNavigation(AHBottomNavigation bottomNavigation)
     {
@@ -167,5 +182,17 @@ public class MainPageActivity extends AppCompatActivity {
         imgAvatarUser_toolbar.setVisibility(View.INVISIBLE);
         imgOurJournal.setVisibility(View.INVISIBLE);
         topBar.setVisibility(View.INVISIBLE);
+        rvlPost.setVisibility(View.INVISIBLE);
+    }
+    void LoadData()
+    {
+        lsPost=new ArrayList<>();
+        lsPost.add(new Post("lily.png","lily","hi, im lily"));
+        lsPost.add(new Post("haewon.png","haewon","hi, im haewon"));
+        lsPost.add(new Post("jinni.png","jinni","hi, im jinni"));
+        lsPost.add(new Post("bae.png","bae","hi, im bae"));
+        lsPost.add(new Post("kyujin.png","kyujin","hi, im kyujin"));
+        lsPost.add(new Post("sullyoon.png","sullyoon","hi, im sullyoon"));
+        lsPost.add(new Post("jiwoo.png","jiwoo","hi, im jiwoo"));
     }
 }
