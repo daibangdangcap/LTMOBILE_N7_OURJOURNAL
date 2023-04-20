@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/Aboutuspage_ivbtnback"
+                android:layout_width="33dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/arrow_back_ios_new"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <ImageView
+                android:id="@+id/Aboutuspage_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/drawermenu_ourjournal"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Aboutuspage_ivbtnback"
+                />
+            <TextView
+                android:id="@+id/Aboutuspage_tvtext1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Aboutuspage_logo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="     Công ty OurJournal là một doanh nghiệp hoạt động trong lĩnh vực công nghệ và du lịch. Công ty cung cấp ứng dụng truyền thông cho phép người dùng kết nối và chia sẻ các trải nghiệm du lịch của họ trên toàn thế giới."
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/Aboutuspage_tvtext2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Aboutuspage_tvtext1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="     Công ty được thành lập vào năm 2020, với mong muốn mang lại cho khách hàng một cách tiếp cận mới để tìm kiếm thông tin về các điểm đến du lịch thông qua các chia sẻ trải nghiệm của mọi người. Với sự phát triển của công nghệ, công ty đã liên tục cập nhật sản phẩm của mình nhằm đáp ứng nhu cầu của người dùng."
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/Aboutuspage_tvtext3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Aboutuspage_tvtext2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="     Ứng dụng của công ty Journal cho phép người dùng có thể chia sẻ trải nghiệm của mình về địa điểm du lịch, gợi ý cho những người khác về những điểm đến mới, hay lưu những hình ảnh trên map để kỉ niệm hành trình du lịch của mình một cách nhanh nhất có thể."
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/Aboutuspage_tvtext4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Aboutuspage_tvtext3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="     Sứ mệnh của OurJournal là mang lại cho người dùng một không gian để chia sẻ và khám phá thế giới thông qua những trải nghiệm du lịch đa dạng. Và đến năm 2023, đã có hàng triệu tài khoản được tạo và trên 50 triệu những hình ảnh, chia sẽ, những trải nghiệm được đăng tải trên ứng dụng của chúng tôi."
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/Aboutuspage_tvtext5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Aboutuspage_tvtext4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="     Chúng tôi mong muốn rằng các bạn sẽ tiếp tục lựa chọn OurJournal trên những chuyến phiêu lưu tiếp theo của mình, để chia sẽ những trải nghiệm cho mọi người, cũng như lưu dấu lại hành trình của mình."
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/Aboutuspage_tvtext6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Aboutuspage_tvtext5"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center"
+                android:text="     OurJournal nhật kí hành trình của bạn !"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</FrameLayout>

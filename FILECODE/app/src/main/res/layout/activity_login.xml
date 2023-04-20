@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="#A9D390">
+
+    <ImageButton
+        android:id="@+id/arrowback_register"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="#A9D390"
+        android:src="@drawable/white_arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.8"></ImageButton>
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Đăng nhập"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/table_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        android:fontFamily="@font/inter"></TextView>
+
+    <View
+        android:id="@+id/table_register"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:background="@drawable/rectangle_7_shape"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.6"></View>
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chào mừng đã trở lại!"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="@id/table_register"
+        app:layout_constraintBottom_toBottomOf="@id/table_register"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintLeft_toLeftOf="@id/table_register"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/inter"></TextView>
+
+    <EditText
+        android:id="@+id/etUsernameLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_9"
+        android:hint="Tên đăng nhập"
+        android:drawablePadding="6dp"
+        android:drawableLeft="@drawable/account_circle"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
+        app:layout_constraintLeft_toLeftOf="@id/table_register"
+        app:layout_constraintRight_toRightOf="@id/table_register"
+        android:layout_marginTop="64dp"
+        android:paddingLeft="16dp"
+        android:fontFamily="@font/inter"></EditText>
+
+    <EditText
+        android:id="@+id/etPassLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_9"
+        android:hint="Mật khẩu"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:drawableLeft="@drawable/lock_open"
+        android:drawablePadding="6dp"
+        app:layout_constraintTop_toBottomOf="@id/etUsernameLogin"
+        app:layout_constraintStart_toStartOf="@id/table_register"
+        app:layout_constraintEnd_toEndOf="@id/table_register"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="16dp"
+        android:inputType="textPassword"
+        android:fontFamily="@font/inter"></EditText>
+
+    <CheckBox
+        android:id="@+id/tvRememberme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter"
+        android:text="Lưu thông tin đăng nhập"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/table_register"
+        app:layout_constraintHorizontal_bias="0.145"
+        app:layout_constraintStart_toStartOf="@id/table_register"
+        app:layout_constraintTop_toBottomOf="@id/etPassLogin"></CheckBox>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sendLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tiếp tục"
+        android:drawableRight="@drawable/arrow_forward"
+        android:drawablePadding="50dp"
+        app:cornerRadius="20dp"
+        android:backgroundTint="#82AAE3"
+        app:layout_constraintTop_toBottomOf="@id/tvRememberme"
+        app:layout_constraintStart_toStartOf="@id/table_register"
+        app:layout_constraintEnd_toEndOf="@id/table_register"
+        app:layout_constraintWidth_percent="0.6"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/inter"
+        ></com.google.android.material.button.MaterialButton>
+</androidx.constraintlayout.widget.ConstraintLayout>

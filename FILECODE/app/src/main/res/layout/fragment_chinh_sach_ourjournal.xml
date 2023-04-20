@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <ImageView android:id="@+id/Policyourjournal_ivbtback"
+                android:src="@drawable/arrow_back_ios_new"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="33dp"
+                android:layout_height="31dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+            <TextView
+                android:id="@+id/Policyourjournal_tvheader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHÍNH SÁCH OURJOURNAL"
+                app:layout_constraintTop_toBottomOf="@+id/Policyourjournal_ivbtback"
+                android:gravity="center"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_marginTop="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/Policyourjournal_tvheader"
+                android:text="@string/PolicyOurJournal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView >
+</FrameLayout>

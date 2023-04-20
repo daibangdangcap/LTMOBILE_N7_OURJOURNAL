@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SettingFragment"
+    android:background="#E8E8E8"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/content_caidat">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintTop_toBottomOf="@+id/Settingpage_ivline"
+        android:background="@drawable/setting_round"
+        />
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/Settingpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/btnBack_Setting"
+            android:layout_width="33dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/white_arrow_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/Settingpage_tvsetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:layout_marginRight="200dp"
+            android:text="Cài đặt"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintLeft_toLeftOf="@+id/btnBack_Setting"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnChangePassword_Setting"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginTop="65dp"
+            android:layout_marginLeft="30dp"
+            app:cornerRadius="20dp"
+            android:drawableTop="@drawable/setting_lock"
+            android:text="Đổi mật khẩu"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBack_Setting" />
+
+        <Button
+            android:id="@+id/btnSupport_Setting"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_horizontal|center"
+            app:cornerRadius="20dp"
+            android:drawableTop="@drawable/setting_help"
+            android:text="Hỗ trợ"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnChangeInfo_Setting" />
+
+
+        <Button
+            android:id="@+id/btnPolicy_Setting"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="40dp"
+            app:cornerRadius="20dp"
+            android:drawableTop="@drawable/setting_policy"
+            android:gravity="center"
+            android:text="Chính sách và điều khoản"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/btnChangePassword_Setting"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+
+        <Button
+            android:id="@+id/btnAboutUs_Setting"
+            android:layout_width="330dp"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="55dp"
+            app:cornerRadius="20dp"
+            android:text="Thông tin về chúng tôi"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/btnSupport_Setting"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+
+        <Button
+            android:id="@+id/btnChangeInfo_Setting"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="65dp"
+            android:layout_alignParentEnd="true"
+            app:cornerRadius="20dp"
+            android:drawableTop="@drawable/setting_user"
+            android:text="Đổi thông tin cá nhân"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/btnBack_Setting"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+
+
+
+        <TextView
+            android:id="@+id/OurJournal2023_Setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="Our Journal 2023"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

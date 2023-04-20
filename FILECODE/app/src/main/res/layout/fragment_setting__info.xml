@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.Setting_InfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ChangePersonalinfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btnBack_ChangeInfo"
+            android:layout_width="33dp"
+            android:layout_height="31dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/arrow_back_ios_new"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvChangeInfo_ChangeInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="33dp"
+            android:text="Đổi thông tin cá nhân"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            app:layout_constraintLeft_toLeftOf="@+id/btnBack_ChangeInfo"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edUserName_ChangeInfo"
+            android:layout_width="380dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/setting_password_rectangle"
+            android:backgroundTint="#EEEEEE"
+            android:drawableEnd="@drawable/baseline_refresh_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName_ChangeInfo" />
+
+        <EditText
+            android:id="@+id/edDOB_ChangeInfo"
+            android:layout_width="380dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/setting_password_rectangle"
+            android:backgroundTint="#EEEEEE"
+            android:drawableEnd="@drawable/baseline_refresh_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDOB_ChangeInfo" />
+
+        <EditText
+            android:id="@+id/edPhone_ChangeInfo"
+            android:layout_width="380dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/setting_password_rectangle"
+            android:backgroundTint="#EEEEEE"
+            android:drawableEnd="@drawable/baseline_refresh_24"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPhone_ChangeInfo" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar_ChangeInfo"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/userpage_avatar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ChangePersonalinfo_ivline" />
+
+        <ImageButton
+            android:id="@+id/ibChangeAvatar_ChangeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:layout_marginRight="140dp"
+            android:background="@null"
+            android:scaleX="1.60"
+            android:scaleY="1.60"
+            android:src="@drawable/baseline_refresh_24"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ChangePersonalinfo_ivline" />
+
+        <TextView
+            android:id="@+id/tvUserName_ChangeInfo"
+            android:layout_width="158.5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Họ và tên"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgAvatar_ChangeInfo" />
+
+        <TextView
+            android:id="@+id/tvDOB_ChangeInfo"
+            android:layout_width="158.5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Ngày sinh"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edUserName_ChangeInfo" />
+
+        <TextView
+            android:id="@+id/tvPhone_ChangeInfo"
+            android:layout_width="224.5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Số điện thoại"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edDOB_ChangeInfo" />
+
+        <TextView
+            android:id="@+id/tvSex_ChangeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Giới tính"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edPhone_ChangeInfo" />
+
+
+        <RadioGroup
+            android:id="@+id/rgSex_ChangeInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/tvSex_ChangeInfo">
+
+            <RadioButton
+                android:id="@+id/rbMale_ChangeInfo"
+                android:layout_width="86.5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:checked="true"
+                android:text="Nam"
+                android:textSize="25sp" />
+
+            <RadioButton
+                android:id="@+id/rbFemale_ChangeInfo"
+                android:layout_width="75.5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="Nữ"
+                android:textSize="25sp" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnSubmic_ChangeInfo"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="130dp"
+            android:layout_marginBottom="35dp"
+            android:paddingVertical="10dp"
+            android:text="Xác nhận"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:backgroundTint="@null"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rgSex_ChangeInfo" />
+
+
+        <TextView
+            android:id="@+id/OurJournal2023_ChangeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Our Journal 2023"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <ImageView
+            android:id="@+id/ChangePersonalinfo_ivline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="87dp"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

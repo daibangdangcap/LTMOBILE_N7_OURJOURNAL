@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.FriendFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView android:id="@+id/btnBack_Friends"
+                android:src="@drawable/arrow_back_ios_new"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="33dp"
+                android:layout_height="31dp" />
+            <TextView android:id="@+id/tvBanBe"
+                android:textSize="32sp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="59dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="157dp"
+                android:layout_height="62dp"
+                android:text="Bạn Bè"
+                />
+        </RelativeLayout>
+        <ScrollView android:id="@+id/trang_b_n_b_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reListBanBe">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

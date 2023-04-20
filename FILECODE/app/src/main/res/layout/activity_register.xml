@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F0A7"
+    tools:context=".Register"
+    >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/arrowback_register"
+                android:layout_width="33dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="62dp"
+                android:background="#F4F1A8"
+                android:src="@drawable/arrow_back_ios_new" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="95dp"
+                android:text="Đăng ký"
+                android:textColor="@color/black"
+                android:textSize="45sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            <View
+                android:id="@+id/table_register"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:layout_marginTop="170dp"
+                android:background="@drawable/rectangle_7_shape" />
+
+
+            <EditText
+                android:id="@+id/etUsername_register"
+                android:layout_width="match_parent"
+                android:layout_height="47.92dp"
+                android:layout_alignTop="@id/table_register"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/rectangle_9"
+                android:hint="Tên đăng nhập"
+                android:paddingLeft="20dp"
+                android:inputType="text"
+                android:fontFamily="@font/inter"/>
+
+            <EditText
+                android:id="@+id/etPassword_register"
+                android:layout_width="match_parent"
+                android:layout_height="47.92dp"
+                android:layout_below="@id/etUsername_register"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/rectangle_9"
+                android:hint="Mật khẩu"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:fontFamily="@font/inter"/>
+
+            <EditText
+                android:id="@+id/etReenterPassword_register"
+                android:layout_width="match_parent"
+                android:layout_height="47.92dp"
+                android:layout_below="@id/etPassword_register"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/rectangle_9"
+                android:hint="Nhập lại mật khẩu"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:fontFamily="@font/inter"/>
+
+            <EditText
+                android:id="@+id/etEmail_register"
+                android:layout_width="match_parent"
+                android:layout_height="47.92dp"
+                android:layout_below="@id/etReenterPassword_register"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/rectangle_9"
+                android:hint="Nhập email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="20dp"
+                android:fontFamily="@font/inter" />
+
+            <EditText
+                android:id="@+id/etPhonenumber_register"
+                android:layout_width="match_parent"
+                android:layout_height="47.92dp"
+                android:layout_below="@id/etEmail_register"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/rectangle_9"
+                android:hint="Nhập số điện thoại"
+                android:inputType="phone"
+                android:paddingLeft="20dp"
+                android:fontFamily="@font/inter"/>
+
+            <LinearLayout
+                android:id="@+id/GenderGroup_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etPhonenumber_register">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Giới tính"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter"/>
+
+                <RadioGroup
+                    android:id="@+id/rgSex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Nam"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/inter" />
+
+                    <RadioButton
+                        android:id="@+id/rbFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Nữ"
+                        android:textSize="20sp"
+                        android:textStyle="bold" android:fontFamily="@font/inter"/>
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/policy_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/GenderGroup_register"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Bằng cách tạo tài khoản, bạn đồng ý với chính sách
+và điều khoản của công ty chúng tôi"
+                android:textColor="@color/black"
+                android:textStyle="italic" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegisterr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/policy_register"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/black"
+                    android:drawableRight="@drawable/arrow_forward"
+                    android:fontFamily="@font/inter"
+                    android:text="Bắt đầu hành trình"
+                    app:cornerRadius="20dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    </RelativeLayout>

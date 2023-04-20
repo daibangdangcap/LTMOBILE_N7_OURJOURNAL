@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_UserPage"
+            android:icon="@drawable/drawermenu_user"
+            android:title="Trang cá nhân"
+            />
+        <item
+            android:id="@+id/nav_Friends"
+            android:icon="@drawable/drawermenu_friends"
+            android:title="Bạn bè"
+            />
+        <item
+            android:id="@+id/nav_FriendsRequests"
+            android:icon="@drawable/drawermenu_addfriends"
+            android:title="Lời mời kết bạn"
+            />
+        <item
+            android:id="@+id/nav_Map"
+            android:icon="@drawable/drawermenu_map"
+            android:title="Bản đồ"
+            />
+        <item
+            android:id="@+id/nav_Setting"
+            android:icon="@drawable/drawermenu_settings"
+            android:title="Cài đặt"
+            />
+        <item
+            android:id="@+id/nav_Logout"
+            android:icon="@drawable/drawermenu_logout"
+            android:title="Đăng xuất"
+            />
+
+    </group>
+</menu>

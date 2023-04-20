@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.PostingFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <EditText
+        android:id="@+id/Caption_UpPost"
+        android:layout_width="match_parent"
+        android:layout_height="98.5dp"
+        android:layout_marginTop="30dp"
+        android:textAlignment="textStart"
+        android:paddingLeft="20dp"
+        android:text="Đôi lời về bài viết"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBack_UpPost"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Caption_UpPost"
+        android:id="@+id/rvListAnh_DangBai"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvListAnh_DangBai"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textAlignment="textStart"
+        android:drawableRight="@drawable/add_photo_alternate"
+        app:backgroundTint="@null"
+        android:background="@drawable/posting_rectangle"
+        android:text="Thêm ảnh"
+        android:layout_marginTop="30dp"
+        android:id="@+id/AddImages_UpPost"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddImages_UpPost"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textAlignment="textStart"
+        android:drawableRight="@drawable/add_location_alt"
+        app:backgroundTint="@null"
+        android:background="@drawable/posting_rectangle"
+        android:text="Thêm vị trí"
+        android:layout_marginTop="10dp"
+        android:id="@+id/AddLocation_UpPost"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddLocation_UpPost"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textAlignment="textStart"
+        android:drawableRight="@drawable/auto_videocam"
+        app:backgroundTint="@null"
+        android:background="@drawable/posting_rectangle"
+        android:text="Thêm video"
+        android:layout_marginTop="10dp"
+        android:id="@+id/AddVideo_UpPost"
+        />
+    <Button
+        android:id="@+id/btnUpPost_UpPost"
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textAllCaps="false"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="11dp"
+        android:gravity="center"
+        android:text="Đăng bài"
+        android:textSize="25sp"
+        app:backgroundTint="@null"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/AddVideo_UpPost"/>
+
+    <ImageView
+        android:id="@+id/btnBack_UpPost"
+        android:layout_width="33dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="arrow_back_ios_new"
+        android:src="@drawable/arrow_back_ios_new"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/OurJournal_DangBai"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="our_journal_1_ek1"
+        android:src="@drawable/drawermenu_ourjournal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btnBack_UpPost"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
