@@ -4,91 +4,74 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.google.android.gms.common.internal.Objects;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.util.GAuthToken;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String FILE_USERNAME = "rememberMe";
     //
     ImageButton arrowbackregister;
-    EditText etUsernamelogin, etPasslogin;
+    EditText etEmailLogin, etPasslogin;
     MaterialButton sendlogin;
-    CheckBox saveID;
-
-
-    String saveUsername;
-    String savePassword;
-
-
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         arrowbackregister = findViewById(R.id.arrowback_register);
-        etUsernamelogin = findViewById(R.id.etUsernameLogin);
+        etEmailLogin = findViewById(R.id.etUsernameLogin);
         etPasslogin = findViewById(R.id.etPassLogin);
         sendlogin = findViewById(R.id.sendLogin);
-        //Remember me
-        saveID = (CheckBox) findViewById(R.id.tvRememberme);
-        SharedPreferences sharedPreferences = getSharedPreferences(FILE_USERNAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String saveUsername = sharedPreferences.getString("lgUsername","");
-        String savePassword = sharedPreferences.getString("lgPassword","");
-        if (sharedPreferences.contains("checked") && sharedPreferences.getBoolean("checked",false)==true)
-        {
-            saveID.setChecked(true);
-        }
-        else
-        {
-            saveID.setChecked(false);
-        }
-        etUsernamelogin.setText(saveUsername);
-        etPasslogin.setText(savePassword);
-
+        auth = FirebaseAuth.getInstance();
 
         sendlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (saveID.isChecked())
+              String email = etEmailLogin.getText().toString();
+              String password = etPasslogin.getText().toString();
+
+              if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                  if (!password.isEmpty()) {
+                      auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                          @Override
+                          public void onSuccess(AuthResult authResult) {
+                              Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                              startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
+                              finish();
+                          }
+                      }).addOnFailureListener(new OnFailureListener() {
+                          @Override
+                          public void onFailure(@NonNull Exception e) {
+                              Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
+                          }
+                      });
+                  } else {
+                      etPasslogin.setError("Vui lòng nhập mật khẩu!");
+                      etPasslogin.requestFocus();
+                  }
+              }
+                    else if (email.isEmpty())
                 {
-                    editor.putBoolean("checked",true);
-                    editor.apply();
-                    StoreDataUsingSharedPref(saveUsername, savePassword);
-
-                    if (!checkUsername() | !checkPassword())
-                    {
-                    }
-                    else
-                    {
-                        checkUser();
-                    }
+                    etEmailLogin.setError("Vui lòng nhập tên đăng nhập!");
+                    etEmailLogin.requestFocus();
                 }
-                else
+                    else
                 {
-                    if (!checkUsername() | !checkPassword())
-                    {
-                    }
-                    else
-                    {
-                        checkUser();
-                     }
-
+                    etEmailLogin.setError("Vui lòng nhập email!");
                 }
-
             }
         });
         arrowbackregister.setOnClickListener(new View.OnClickListener() {
@@ -97,67 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
 
-        });
-    }
-
-    private void StoreDataUsingSharedPref(String saveUsername, String savePassword) {
-        SharedPreferences.Editor editor = getSharedPreferences(FILE_USERNAME, MODE_PRIVATE).edit();
-        editor.putString("lgUsername", saveUsername);
-        editor.putString("lgPassword", savePassword);
-
-    }
-
-    boolean checkUsername() {
-        String val = etUsernamelogin.getText().toString();
-        if (val.isEmpty()) {
-            etUsernamelogin.setError("Vui lòng nhập tên đăng nhập!");
-            etUsernamelogin.requestFocus();
-            return false;
-        }
-            return true;
-    }
-    boolean checkPassword()
-    {
-        String val = etPasslogin.getText().toString();
-        if (val.isEmpty()) {
-            etPasslogin.setError("Vui lòng nhập mật khẩu!");
-            etPasslogin.requestFocus();
-            return false;
-        }
-            return true;
-    }
-    public void checkUser()
-    {
-        String username = etUsernamelogin.getText().toString().trim();
-        String password = etPasslogin.getText().toString().trim();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase = reference.orderByChild("username").equalTo(username);
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
-                    String passwordDB = snapshot.child(username).child("password").getValue(String.class);
-
-                    if (passwordDB.equals(password))
-                    {
-                        startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
-                    }
-                    else {
-                        etPasslogin.setError("Sai mật khẩu");
-                        etPasslogin.requestFocus();
-                    }
-                }
-                else  {
-                    etUsernamelogin.setError("Người dùng không tồn tại");
-                    etUsernamelogin.requestFocus();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
         });
     }
 }

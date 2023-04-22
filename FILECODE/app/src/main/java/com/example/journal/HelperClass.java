@@ -1,23 +1,24 @@
 package com.example.journal;
 
 public class HelperClass {
-    String username, password, email, phone;
-    int sex;
+    public String fullname, password, email, phone, gender;
 
-    public HelperClass(String username, String password, String email, String phone, int sex) {
-        this.username = username;
+    public HelperClass()
+    {}
+    public HelperClass(String fullname, String password, String email, String phone, String  gender) {
+        this.fullname = fullname;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.sex = sex;
+        this.gender = gender;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPassword() {
@@ -44,11 +45,11 @@ public class HelperClass {
         this.phone = phone;
     }
 
-    public int getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(int sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
