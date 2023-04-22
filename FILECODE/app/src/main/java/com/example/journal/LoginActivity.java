@@ -2,6 +2,8 @@ package com.example.journal;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +12,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.example.journal.fragment.ForgetPasswordFragment;
 import com.google.android.gms.common.internal.Objects;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     MaterialButton sendlogin;
     CheckBox saveID;
 
+    TextView forgetpassword;
 
     String saveUsername;
     String savePassword;
@@ -42,6 +47,15 @@ public class LoginActivity extends AppCompatActivity {
         etUsernamelogin = findViewById(R.id.etUsernameLogin);
         etPasslogin = findViewById(R.id.etPassLogin);
         sendlogin = findViewById(R.id.sendLogin);
+        forgetpassword = findViewById(R.id.tvForgetpass);
+        //Forgetpassword
+        forgetpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forgetpass();
+                setvisibility_forgetpass();
+            }
+        });
         //Remember me
         saveID = (CheckBox) findViewById(R.id.tvRememberme);
         SharedPreferences sharedPreferences = getSharedPreferences(FILE_USERNAME, MODE_PRIVATE);
@@ -159,5 +173,21 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void forgetpass ()
+    {
+        Fragment fragment = new ForgetPasswordFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.TrangDangnhap,fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+    void setvisibility_forgetpass()
+    {
+        arrowbackregister.setVisibility(View.INVISIBLE);
+        etPasslogin.setVisibility(View.INVISIBLE);
+        etUsernamelogin.setVisibility(View.INVISIBLE);
+        sendlogin.setVisibility((View.INVISIBLE));
+        saveID.setVisibility(View.INVISIBLE);
     }
 }
