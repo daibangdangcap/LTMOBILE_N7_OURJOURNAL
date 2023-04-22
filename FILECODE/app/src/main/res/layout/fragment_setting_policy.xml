@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.Setting_PolicyFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_policy_setting">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        >
 
         <ImageView android:id="@+id/btnBack_Policy"
             android:src="@drawable/arrow_back_ios_new"
@@ -34,6 +36,7 @@
             />
 
         <ImageView
+            android:id="@+id/imgBackground_Policy"
             android:src="@drawable/setting_policy_bg"
             android:contentDescription="untitled_1"
             android:layout_marginStart="0dp"

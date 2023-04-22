@@ -12,11 +12,7 @@ import android.widget.ImageView;
 
 import com.example.journal.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Setting_HelpFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class Setting_HelpFragment extends Fragment {
 
     ImageView btnBack_Support;
@@ -33,7 +29,7 @@ public class Setting_HelpFragment extends Fragment {
                 if(fragment!=null)
                 {
                     FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.trangchu,fragment).commit();
+                    fragmentTransaction.replace(R.id.content_help_setting,fragment).commit();
                 }
             }
         });
