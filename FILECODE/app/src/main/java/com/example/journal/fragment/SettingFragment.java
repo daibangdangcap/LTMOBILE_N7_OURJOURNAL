@@ -22,12 +22,10 @@ public class SettingFragment extends Fragment {
     Button btnChangeUserInform;
     Button btnChangePassword;
     Button btnPolicy;
-
+    Button btnAboutUs;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -82,6 +80,17 @@ public class SettingFragment extends Fragment {
                 Intent i = new Intent(getActivity(), MainPageActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(0, 0);
+            }
+        });
+
+        btnAboutUs=view.findViewById(R.id.btnAboutUs_Setting);
+        btnAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment=new AboutUsFragment();
+                FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
+                fragmentTransaction.addToBackStack(null);
             }
         });
         return view;

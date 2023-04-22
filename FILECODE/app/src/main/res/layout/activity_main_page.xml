@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:id="@+id/trangchinh"
         android:background="#F4F3F3">
+
         <View
             android:id="@+id/vTopBar"
             android:layout_width="match_parent"
@@ -65,6 +66,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:layout_width="239dp"
         android:layout_height="450dp"
