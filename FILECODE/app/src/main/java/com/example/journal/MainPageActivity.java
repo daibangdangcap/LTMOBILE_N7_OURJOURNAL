@@ -22,6 +22,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.example.journal.Adapter.PostAdapter;
 import com.example.journal.Model.Post;
+import com.example.journal.fragment.BlankSettingFragment;
 import com.example.journal.fragment.FriendFragment;
 import com.example.journal.fragment.FriendRequestFragment;
 import com.example.journal.fragment.PostingFragment;
@@ -89,7 +90,7 @@ public class MainPageActivity extends AppCompatActivity {
                                 startActivity(new Intent(MainPageActivity.this, MapActivity.class)); //thay bằng trang map
                                 return true;
                             case R.id.nav_Setting:
-                                LoadFragment(new SettingFragment());
+                                LoadFragment(new BlankSettingFragment());
                                 return true;
                             case R.id.nav_UserPage:
                                 LoadFragment(new UserpageFragment());

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,45 +38,33 @@ public class Setting_PolicyFragment extends Fragment {
         btnBack_Policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new SettingFragment();
-                if(fragment!=null)
-                {
-                    FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.content_policy_setting,fragment).commit();
-                }
+
+                    Navigation.findNavController(view).navigate(R.id.action_setting_PolicyFragment_to_settingFragment);
+
             }
         });
         btnAppPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new ApplicationPolicyFragment();
-                FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
+                Navigation.findNavController(view).navigate(R.id.action_setting_PolicyFragment_to_applicationPolicyFragment);
 
             }
         });
         btnUserPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new UserPolicyFragment();
-                if(fragment!=null)
-                {
-                    FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
 
-                }
+                    Navigation.findNavController(view).navigate(R.id.action_setting_PolicyFragment_to_userPolicyFragment);
+
             }
         });
         btnOurJournalPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new OurJournalPolicyFragment();
-                if(fragment!=null)
-                {
-                    FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
 
-                }
+                    Navigation.findNavController(view).navigate(R.id.action_setting_PolicyFragment_to_ourJournalPolicyFragment);
+
+
             }
         });
         return view;

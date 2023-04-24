@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.example.journal.R;
 
@@ -25,9 +26,7 @@ public class AboutUsFragment extends Fragment {
                 Fragment fragment=new SettingFragment();
                 if(fragment!=null)
                 {
-                    FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.content_aboutus,fragment).commit();
-
+                    Navigation.findNavController(view).navigate(R.id.action_aboutUsFragment_to_settingFragment);
                 }
             }
         });
