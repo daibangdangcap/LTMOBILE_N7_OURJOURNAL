@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,21 +23,35 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.journal.HelperClass;
 import com.example.journal.MainPageActivity;
 import com.example.journal.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.ktx.Firebase;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserpageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.w3c.dom.Text;
+
+
 public class UserpageFragment extends Fragment {
+
 
     ImageView btnBack;
     ImageView imgAnhDaiDien;
     int GALLERY_REG_CODE=1000;
     ImageButton btnselectAnhDaiDien;
+    //FIREBASE
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +59,40 @@ public class UserpageFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_userpage, container, false);
         btnselectAnhDaiDien=view.findViewById(R.id.btnDoiAnh);
         imgAnhDaiDien=view.findViewById(R.id.anhdaidien);
+        //firebase
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID  = user.getUid();
+        //information user
+        final TextView user_fullname = (TextView) view.findViewById(R.id.tennguoidung);
+        final TextView user_dob = (TextView) view.findViewById(R.id.sinhnhatinfo_trangcanhan);
+        final TextView user_phone = (TextView) view.findViewById(R.id.sdtinfo_trangcanhan);
+        final TextView user_gender = (TextView) view.findViewById(R.id.gioitinhinfo_trangcanhan);
+
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HelperClass userProfile = snapshot.getValue(HelperClass.class);
+                if (userProfile != null)
+                {
+                    String fullName = userProfile.fullname;
+                    String phone = userProfile.phone;
+                    String gender = userProfile.gender;
+
+                    user_fullname.setText(fullName);
+                    user_phone.setText(phone);
+                    user_gender.setText(gender);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
         //Ấn vào ảnh đại diện để xem chi tiết hơn
         imgAnhDaiDien.setOnClickListener(new View.OnClickListener() {
             @Override

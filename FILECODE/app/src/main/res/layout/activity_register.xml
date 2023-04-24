@@ -40,36 +40,43 @@
 
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-            <View
                 android:id="@+id/table_register"
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="170dp"
-                android:background="@drawable/rectangle_7_shape" />
-
+                android:background="@drawable/rectangle_7_shape"
+                >
+               <EditText
+                   android:id ="@+id/etName_Register"
+                   android:layout_width="match_parent"
+                   android:layout_height="47.92dp"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="30dp"
+                   android:paddingLeft="20dp"
+                   android:hint="Họ và tên"
+                   android:background="@drawable/rectangle_9"
+                   android:layout_marginRight="20dp"
+                   />
 
             <EditText
-                android:id="@+id/etUsername_register"
+                android:id="@+id/etEmail_Registerr"
                 android:layout_width="match_parent"
                 android:layout_height="47.92dp"
-                android:layout_alignTop="@id/table_register"
+                android:layout_below="@id/etName_Register"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/rectangle_9"
-                android:hint="Tên đăng nhập"
+                android:hint="Email"
                 android:paddingLeft="20dp"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:fontFamily="@font/inter"/>
 
             <EditText
                 android:id="@+id/etPassword_register"
                 android:layout_width="match_parent"
                 android:layout_height="47.92dp"
-                android:layout_below="@id/etUsername_register"
+                android:layout_below="@id/etEmail_Registerr"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="20dp"
@@ -94,7 +101,7 @@
                 android:fontFamily="@font/inter"/>
 
             <EditText
-                android:id="@+id/etEmail_register"
+                android:id="@+id/etDOB_register"
                 android:layout_width="match_parent"
                 android:layout_height="47.92dp"
                 android:layout_below="@id/etReenterPassword_register"
@@ -102,8 +109,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/rectangle_9"
-                android:hint="Nhập email"
-                android:inputType="textEmailAddress"
+                android:hint="Nhập ngày sinh"
+                android:inputType="date"
                 android:paddingLeft="20dp"
                 android:fontFamily="@font/inter" />
 
@@ -111,7 +118,7 @@
                 android:id="@+id/etPhonenumber_register"
                 android:layout_width="match_parent"
                 android:layout_height="47.92dp"
-                android:layout_below="@id/etEmail_register"
+                android:layout_below="@id/etDOB_register"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
