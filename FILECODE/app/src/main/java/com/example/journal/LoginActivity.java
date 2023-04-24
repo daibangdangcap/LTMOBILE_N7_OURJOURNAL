@@ -1,19 +1,29 @@
 package com.example.journal;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.journal.fragment.ForgetPasswordFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmailLogin, etPasslogin;
     MaterialButton sendlogin;
     FirebaseAuth auth;
+    TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmailLogin = findViewById(R.id.etUsernameLogin);
         etPasslogin = findViewById(R.id.etPassLogin);
         sendlogin = findViewById(R.id.sendLogin);
+        forgotPassword = findViewById(R.id.tvForgetpass);
         auth = FirebaseAuth.getInstance();
 
         sendlogin.setOnClickListener(new View.OnClickListener() {
@@ -81,5 +93,20 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new ForgetPasswordFragment());
+            }
+        });
+    }
+
+    private void loadFragment(Fragment fmNew) {
+        FragmentTransaction fmTran = getSupportFragmentManager().beginTransaction();
+        fmTran.replace(R.id.TrangDangnhap, fmNew);
+        fmTran.addToBackStack(null);
+        fmTran.commit();
+        sendlogin.setVisibility(View.INVISIBLE);
+        forgotPassword.setVisibility(View.INVISIBLE);
     }
 }
