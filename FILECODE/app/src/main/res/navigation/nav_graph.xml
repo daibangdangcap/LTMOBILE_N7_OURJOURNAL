@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/settingFragment">
 
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.journal.fragment.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_setting_PasswordFragment"
+            app:destination="@id/setting_PasswordFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_setting_InfoFragment"
+            app:destination="@id/setting_InfoFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_setting_HelpFragment"
+            app:destination="@id/setting_HelpFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_setting_PolicyFragment"
+            app:destination="@id/setting_PolicyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setting_PasswordFragment"
+        android:name="com.example.journal.fragment.Setting_PasswordFragment"
+        android:label="fragment_setting__password"
+        tools:layout="@layout/fragment_setting__password" >
+        <action
+            android:id="@+id/action_setting_PasswordFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setting_InfoFragment"
+        android:name="com.example.journal.fragment.Setting_InfoFragment"
+        android:label="fragment_setting__info"
+        tools:layout="@layout/fragment_setting__info" />
+    <fragment
+        android:id="@+id/setting_HelpFragment"
+        android:name="com.example.journal.fragment.Setting_HelpFragment"
+        android:label="fragment_setting__help"
+        tools:layout="@layout/fragment_setting__help" />
+    <fragment
+        android:id="@+id/setting_PolicyFragment"
+        android:name="com.example.journal.fragment.Setting_PolicyFragment"
+        android:label="fragment_setting_policy"
+        tools:layout="@layout/fragment_setting_policy" />
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.example.journal.fragment.AboutUsFragment"
+        android:label="AboutUsFragment" />
 </navigation>

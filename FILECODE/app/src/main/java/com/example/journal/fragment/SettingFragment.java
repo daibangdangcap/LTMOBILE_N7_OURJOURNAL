@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 
 import com.example.journal.MainPageActivity;
 import com.example.journal.R;
+import com.google.android.material.navigation.NavigationView;
 
 
 public class SettingFragment extends Fragment {
@@ -37,40 +39,28 @@ public class SettingFragment extends Fragment {
         btnSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new Setting_HelpFragment();
-                FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Navigation.findNavController(view).navigate(R.id.action_settingFragment_to_setting_HelpFragment);
             }
         });
         btnPolicy=view.findViewById(R.id.btnPolicy_Setting);
         btnPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new Setting_PolicyFragment();
-                FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Navigation.findNavController(view).navigate(R.id.action_settingFragment_to_setting_PolicyFragment);
             }
         });
         btnChangePassword=view.findViewById(R.id.btnChangePassword_Setting);
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new Setting_PasswordFragment();
-                FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Navigation.findNavController(view).navigate(R.id.action_settingFragment_to_setting_PasswordFragment);
             }
         });
         btnChangeUserInform=view.findViewById(R.id.btnChangeInfo_Setting);
         btnChangeUserInform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new Setting_InfoFragment();
-                FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Navigation.findNavController(view).navigate(R.id.action_settingFragment_to_setting_InfoFragment);
             }
         });
         btnBack=view.findViewById(R.id.btnBack_Setting);
@@ -87,10 +77,7 @@ public class SettingFragment extends Fragment {
         btnAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new AboutUsFragment();
-                FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Navigation.findNavController(view).navigate(R.id.action_setting_PasswordFragment_to_aboutUsFragment);
             }
         });
         return view;
