@@ -4,14 +4,25 @@ public class Post {
     String avatar;
     String username;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    String image;
+
     public String getAvatar() {
         return avatar;
     }
 
-    public Post(String avatar, String username, String caption) {
+    public Post(String avatar, String username, String caption,String image) {
         this.avatar = avatar;
         this.username = username;
         this.caption = caption;
+        this.image=image;
     }
 
     public Post() {

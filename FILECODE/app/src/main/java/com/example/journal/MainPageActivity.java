@@ -192,12 +192,12 @@ public class MainPageActivity extends AppCompatActivity {
     void LoadData()
     {
         lsPost=new ArrayList<>();
-        lsPost.add(new Post("lily.png","lily","hi, im lily"));
-        lsPost.add(new Post("haewon.png","haewon","hi, im haewon"));
-        lsPost.add(new Post("jinni.png","jinni","hi, im jinni"));
-        lsPost.add(new Post("bae.png","bae","hi, im bae"));
-        lsPost.add(new Post("kyujin.png","kyujin","hi, im kyujin"));
-        lsPost.add(new Post("sullyoon.png","sullyoon","hi, im sullyoon"));
-        lsPost.add(new Post("jiwoo.png","jiwoo","hi, im jiwoo"));
+        lsPost.add(new Post("lily.png","lily","hi, im lily","lily.png"));
+        lsPost.add(new Post("haewon.png","haewon","hi, im haewon","haewon.png"));
+        lsPost.add(new Post("jinni.png","jinni","hi, im jinni","jinni.png"));
+        lsPost.add(new Post("bae.png","bae","hi, im bae","bae.png"));
+        lsPost.add(new Post("kyujin.png","kyujin","hi, im kyujin","kyujin.png"));
+        lsPost.add(new Post("sullyoon.png","sullyoon","hi, im sullyoon","sullyoon.png"));
+        lsPost.add(new Post("jiwoo.png","jiwoo","hi, im jiwoo","jiwoo.png"));
     }
 }

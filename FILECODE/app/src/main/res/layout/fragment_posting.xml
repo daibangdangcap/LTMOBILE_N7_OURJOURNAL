@@ -23,7 +23,7 @@
         app:layout_constraintTop_toBottomOf="@id/btnBack_UpPost"
         />
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Caption_UpPost"

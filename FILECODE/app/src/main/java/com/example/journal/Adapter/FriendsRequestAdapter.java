@@ -25,7 +25,6 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
     public FriendsRequestAdapter(ArrayList<FriendsRequest> lsFriendRequest) {
         this.lsFriendRequest = lsFriendRequest;
     }
-
     @NonNull
     @Override
     public FriendsRequestAdapter.FriendRequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

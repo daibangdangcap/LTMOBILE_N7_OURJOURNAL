@@ -13,12 +13,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.journal.Adapter.ImagesDangBaiAdapter;
 import com.example.journal.R;
@@ -32,6 +34,7 @@ public class PostingFragment extends Fragment {
     ArrayList<Uri> arrayListUri=new ArrayList<Uri>();
     ImagesDangBaiAdapter adapter;
     private static final int Read_Permission=101;
+    private static final int PICK_IMAGE=1;
 
 
     @Override
@@ -41,13 +44,10 @@ public class PostingFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_posting, container, false);
         recyclerView=view.findViewById(R.id.rvListAnh_DangBai);
         adapter=new ImagesDangBaiAdapter(arrayListUri);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),3);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
-        if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Read_Permission);
-        }
+
 
 
 
@@ -55,14 +55,20 @@ public class PostingFragment extends Fragment {
         addImages_upPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent();
+                if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Read_Permission);
+                    return;
+                }
+                Intent i= new Intent(Intent.ACTION_GET_CONTENT);
                 i.setType("image/*");
-                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR2)
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR2);
                 {
                     i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
                 }
-                i.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(i,"Select Picture"),1);
+                //i.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(i,"Select Picture"),PICK_IMAGE);
             }
         });
         return view;
@@ -71,22 +77,24 @@ public class PostingFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
         super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode==1&&resultCode==Activity.RESULT_OK)
+        if(requestCode==PICK_IMAGE&&resultCode==Activity.RESULT_OK&&null!=data)
         {
             if(data.getClipData()!=null)
             {
-                int x=data.getClipData().getItemCount();
-                for(int i=0;i<x;i++)
+                int countOfImages=data.getClipData().getItemCount();
+                for(int i=0;i<countOfImages;i++)
                 {
-                    arrayListUri.add(data.getClipData().getItemAt(i).getUri());
+                    Uri imageuri=data.getClipData().getItemAt(i).getUri();
+                    arrayListUri.add(imageuri);
                 }
                 adapter.notifyDataSetChanged();
-
-            } else if (data.getData()!=null) {
-                String imageUrl=data.getData().getPath();
-                arrayListUri.add(Uri.parse(imageUrl));
-
             }
+            else
+            {
+                Uri imageuri=data.getData();
+                arrayListUri.add(imageuri);
+            }
+            adapter.notifyDataSetChanged();
         }
     }
 }

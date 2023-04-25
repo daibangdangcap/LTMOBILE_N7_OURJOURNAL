@@ -42,6 +42,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         holder.imgAvatar.setImageBitmap(Ultils.convertToBitmapFromAssets(context,item.getAvatar()));
         holder.tvUserName.setText(item.getUsername());
         holder.tvCaption.setText(item.getCaption());
+        holder.PostImage.setImageBitmap(Ultils.convertToBitmapFromAssets(context,item.getImage()));
     }
 
     @Override
@@ -52,11 +53,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         ImageView imgAvatar;
         TextView tvUserName;
         TextView tvCaption;
+        ImageView PostImage;
         public PostListViewHolder(@NonNull View itemView) {
             super(itemView);
             imgAvatar=itemView.findViewById(R.id.imageAvatar);
             tvCaption=itemView.findViewById(R.id.tvCaption);
             tvUserName=itemView.findViewById(R.id.tvUsername);
+            PostImage=itemView.findViewById(R.id.ivPostImage);
         }
     }
     public interface PostCallBack
