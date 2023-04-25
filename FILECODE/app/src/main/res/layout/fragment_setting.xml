@@ -6,7 +6,6 @@
     tools:context=".fragment.SettingFragment"
     android:background="#E8E8E8"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:id="@+id/content_caidat">
     <ImageView
         android:layout_width="match_parent"

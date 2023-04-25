@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.example.journal.R;
 
@@ -25,8 +26,7 @@ public class ApplicationPolicyFragment extends Fragment {
                 Fragment fragment=new Setting_PolicyFragment();
                 if(fragment!=null)
                 {
-                    FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.trangchinh,fragment).commit();
+                    Navigation.findNavController(view).navigate(R.id.action_applicationPolicyFragment_to_setting_PolicyFragment);
                 }
             }
         });

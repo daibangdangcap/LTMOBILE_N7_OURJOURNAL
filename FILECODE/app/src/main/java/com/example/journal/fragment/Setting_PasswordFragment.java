@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +30,8 @@ public class Setting_PasswordFragment extends Fragment {
                 Fragment fragment=new SettingFragment();
                 if(fragment!=null)
                 {
-                    FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.content_changepassword_setting,fragment).commit();
+                    Navigation.findNavController(view).navigate(R.id.action_setting_PasswordFragment_to_settingFragment);
+
                 }
             }
         });

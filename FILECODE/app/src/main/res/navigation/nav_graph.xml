@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_settingFragment_to_setting_PolicyFragment"
             app:destination="@id/setting_PolicyFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
     </fragment>
     <fragment
         android:id="@+id/setting_PasswordFragment"
@@ -29,26 +32,75 @@
         android:label="fragment_setting__password"
         tools:layout="@layout/fragment_setting__password" >
         <action
-            android:id="@+id/action_setting_PasswordFragment_to_aboutUsFragment"
-            app:destination="@id/aboutUsFragment" />
+            android:id="@+id/action_setting_PasswordFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/setting_InfoFragment"
         android:name="com.example.journal.fragment.Setting_InfoFragment"
         android:label="fragment_setting__info"
-        tools:layout="@layout/fragment_setting__info" />
+        tools:layout="@layout/fragment_setting__info" >
+        <action
+            android:id="@+id/action_setting_InfoFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/setting_HelpFragment"
         android:name="com.example.journal.fragment.Setting_HelpFragment"
         android:label="fragment_setting__help"
-        tools:layout="@layout/fragment_setting__help" />
+        tools:layout="@layout/fragment_setting__help" >
+        <action
+            android:id="@+id/action_setting_HelpFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/setting_PolicyFragment"
         android:name="com.example.journal.fragment.Setting_PolicyFragment"
         android:label="fragment_setting_policy"
-        tools:layout="@layout/fragment_setting_policy" />
+        tools:layout="@layout/fragment_setting_policy" >
+        <action
+            android:id="@+id/action_setting_PolicyFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_setting_PolicyFragment_to_userPolicyFragment"
+            app:destination="@id/userPolicyFragment" />
+        <action
+            android:id="@+id/action_setting_PolicyFragment_to_ourJournalPolicyFragment"
+            app:destination="@id/ourJournalPolicyFragment" />
+        <action
+            android:id="@+id/action_setting_PolicyFragment_to_applicationPolicyFragment"
+            app:destination="@id/applicationPolicyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/aboutUsFragment"
         android:name="com.example.journal.fragment.AboutUsFragment"
-        android:label="AboutUsFragment" />
+        android:label="AboutUsFragment" >
+        <action
+            android:id="@+id/action_aboutUsFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPolicyFragment"
+        android:name="com.example.journal.fragment.UserPolicyFragment"
+        android:label="UserPolicyFragment" >
+        <action
+            android:id="@+id/action_userPolicyFragment_to_setting_PolicyFragment"
+            app:destination="@id/setting_PolicyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ourJournalPolicyFragment"
+        android:name="com.example.journal.fragment.OurJournalPolicyFragment"
+        android:label="OurJournalPolicyFragment" >
+        <action
+            android:id="@+id/action_ourJournalPolicyFragment_to_setting_PolicyFragment"
+            app:destination="@id/setting_PolicyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/applicationPolicyFragment"
+        android:name="com.example.journal.fragment.ApplicationPolicyFragment"
+        android:label="ApplicationPolicyFragment" >
+        <action
+            android:id="@+id/action_applicationPolicyFragment_to_setting_PolicyFragment"
+            app:destination="@id/setting_PolicyFragment" />
+    </fragment>
 </navigation>

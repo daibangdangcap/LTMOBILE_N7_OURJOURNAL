@@ -5,7 +5,10 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,7 @@ public class SettingFragment extends Fragment {
     Button btnChangePassword;
     Button btnPolicy;
     Button btnAboutUs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_setting,container,false);
+
         btnSupport=view.findViewById(R.id.btnSupport_Setting);
         btnSupport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +82,7 @@ public class SettingFragment extends Fragment {
         btnAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_setting_PasswordFragment_to_aboutUsFragment);
+                Navigation.findNavController(view).navigate(R.id.action_settingFragment_to_aboutUsFragment);
             }
         });
         return view;
