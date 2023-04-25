@@ -149,12 +149,16 @@ public class MainPageActivity extends AppCompatActivity {
                 {
                     case 0:
                     {
-                        Intent i=new Intent(MainPageActivity.this,MainPageActivity.class);
-                        startActivity(i);
+                        if(wasSelected==false)
+                        {
+                            Intent i=new Intent(MainPageActivity.this,MainPageActivity.class);
+                            startActivity(i);
+                        }
                         break;
                     }
                     case 1:
                     {
+
                         setVisibility_Bottom();
                         Fragment fragment=new PostingFragment();
                         FragmentTransaction fmTran = getSupportFragmentManager().beginTransaction();

@@ -15,4 +15,31 @@ import com.example.journal.R;
 import java.util.ArrayList;
 
 public class FriendsRequest {
+    public FriendsRequest(String avatar_friendrequest, String nameuser_friendrequest) {
+        this.avatar_friendrequest = avatar_friendrequest;
+        this.nameuser_friendrequest = nameuser_friendrequest;
+    }
+
+    String avatar_friendrequest;
+
+    public String getAvatar_friendrequest() {
+        return avatar_friendrequest;
+    }
+
+    public void setAvatar_friendrequest(String avatar_friendrequest) {
+        this.avatar_friendrequest = avatar_friendrequest;
+    }
+
+    public String getNameuser_friendrequest() {
+        return nameuser_friendrequest;
+    }
+
+    public void setNameuser_friendrequest(String nameuser_friendrequest) {
+        this.nameuser_friendrequest = nameuser_friendrequest;
+    }
+
+    String nameuser_friendrequest;
+
+    public FriendsRequest() {
+    }
 }

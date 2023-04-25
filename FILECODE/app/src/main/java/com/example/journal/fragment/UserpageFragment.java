@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,7 +44,7 @@ import org.w3c.dom.Text;
 
 
 public class UserpageFragment extends Fragment {
-
+    Button btnChangeInfo;
 
     ImageView btnBack;
     ImageView imgAnhDaiDien;
@@ -115,6 +117,17 @@ public class UserpageFragment extends Fragment {
                 Intent i = new Intent(getActivity(), MainPageActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(0, 0);
+            }
+        });
+        btnChangeInfo=view.findViewById(R.id.btnChinhsuathongtincanhan_trangcanhan);
+        btnChangeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment=new Setting_InfoFragment();
+                FragmentTransaction fmTran = getActivity().getSupportFragmentManager().beginTransaction();
+                fmTran.replace(R.id.trangchinh,fragment);
+                fmTran.addToBackStack(null);
+                fmTran.commit();
             }
         });
         return view;
