@@ -1,81 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainPageActivity"
     android:background="#F4F3F3"
-    android:id="@+id/trangchu"
-    tools:openDrawer="right"
-    android:fitsSystemWindows="true">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/trangchu">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/trangchinh"
-        android:background="#F4F3F3">
-
-        <View
-            android:id="@+id/vTopBar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHeight_percent="0.07"
-            android:background="#FFFFFF"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/account_circle"
-            android:paddingTop="10dp"
-            android:paddingRight="32dp"
-            app:layout_constraintBottom_toBottomOf="@id/vTopBar"
-            app:layout_constraintTop_toTopOf="@id/vTopBar"
-            app:layout_constraintRight_toRightOf="@id/vTopBar"
-            android:id="@+id/imgUser"/>
-
-        <ImageView
-            android:id="@+id/imgOurJournal"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:src="@drawable/drawermenu_ourjournal"
-            android:paddingLeft="16dp"
-            app:layout_constraintStart_toStartOf="@id/vTopBar"
-            app:layout_constraintTop_toTopOf="@id/vTopBar"
-            app:layout_constraintWidth_percent="0.35"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imgOurJournal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="40dp">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
-        </ScrollView>
-        <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="239dp"
-        android:layout_height="450dp"
-        android:layout_gravity="right"
-        app:headerLayout="@layout/drawermenu_navheader"
-        app:menu="@menu/drawer_menu"
-        app:drawerLayoutCornerSize="20dp"
-        android:id="@+id/drawerView"
-        android:layout_marginTop="25dp"
-        />
-
-</androidx.drawerlayout.widget.DrawerLayout>
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
+</RelativeLayout>

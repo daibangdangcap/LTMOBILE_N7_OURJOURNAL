@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/settingFragment">
+    app:startDestination="@id/mainPageFragment">
 
     <fragment
         android:id="@+id/settingFragment"
@@ -103,4 +103,37 @@
             android:id="@+id/action_applicationPolicyFragment_to_setting_PolicyFragment"
             app:destination="@id/setting_PolicyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mainPageFragment"
+        android:name="com.example.journal.fragment.MainPageFragment"
+        android:label="fragment_main_page"
+        tools:layout="@layout/fragment_main_page" >
+        <action
+            android:id="@+id/action_mainPageFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_userpageFragment"
+            app:destination="@id/userpageFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_friendFragment"
+            app:destination="@id/friendFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_friendRequestFragment"
+            app:destination="@id/friendRequestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userpageFragment"
+        android:name="com.example.journal.fragment.UserpageFragment"
+        android:label="fragment_userpage"
+        tools:layout="@layout/fragment_userpage" />
+    <fragment
+        android:id="@+id/friendFragment"
+        android:name="com.example.journal.fragment.FriendFragment"
+        android:label="fragment_friend"
+        tools:layout="@layout/fragment_friend" />
+    <fragment
+        android:id="@+id/friendRequestFragment"
+        android:name="com.example.journal.fragment.FriendRequestFragment"
+        android:label="fragment_friend_request"
+        tools:layout="@layout/fragment_friend_request" />
 </navigation>
