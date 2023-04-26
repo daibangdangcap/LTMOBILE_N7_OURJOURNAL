@@ -72,9 +72,7 @@ public class SettingFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), MainPageActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(0, 0);
+                Navigation.findNavController(view).popBackStack();
             }
         });
 

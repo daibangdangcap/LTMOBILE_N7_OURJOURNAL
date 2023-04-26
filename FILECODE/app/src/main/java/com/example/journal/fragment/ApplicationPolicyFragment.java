@@ -26,7 +26,7 @@ public class ApplicationPolicyFragment extends Fragment {
                 Fragment fragment=new Setting_PolicyFragment();
                 if(fragment!=null)
                 {
-                    Navigation.findNavController(view).navigate(R.id.action_applicationPolicyFragment_to_setting_PolicyFragment);
+                    Navigation.findNavController(view).popBackStack();
                 }
             }
         });

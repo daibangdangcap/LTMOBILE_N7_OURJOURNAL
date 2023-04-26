@@ -29,7 +29,7 @@ public class Setting_HelpFragment extends Fragment {
                 Fragment fragment=new SettingFragment();
                 if(fragment!=null)
                 {
-                    Navigation.findNavController(view).navigate(R.id.action_setting_HelpFragment_to_settingFragment);
+                    Navigation.findNavController(view).popBackStack();
                 }
             }
         });

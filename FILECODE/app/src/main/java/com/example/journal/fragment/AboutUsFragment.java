@@ -26,7 +26,7 @@ public class AboutUsFragment extends Fragment {
                 Fragment fragment=new SettingFragment();
                 if(fragment!=null)
                 {
-                    Navigation.findNavController(view).navigate(R.id.action_aboutUsFragment_to_settingFragment);
+                    Navigation.findNavController(view).popBackStack();
                 }
             }
         });

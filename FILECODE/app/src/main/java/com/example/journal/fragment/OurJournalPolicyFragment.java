@@ -26,7 +26,7 @@ public class OurJournalPolicyFragment extends Fragment {
                 Fragment fragment=new Setting_PolicyFragment();
                 if(fragment!=null)
                 {
-                    Navigation.findNavController(view).navigate(R.id.action_ourJournalPolicyFragment_to_setting_PolicyFragment);
+                    Navigation.findNavController(view).popBackStack();
                 }
             }
         });

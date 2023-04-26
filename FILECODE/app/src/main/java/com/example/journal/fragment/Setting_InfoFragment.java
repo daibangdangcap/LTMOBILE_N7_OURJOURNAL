@@ -30,7 +30,7 @@ public class Setting_InfoFragment extends Fragment {
                 Fragment fragment=new SettingFragment();
                 if(fragment!=null)
                 {
-                    Navigation.findNavController(view).navigate(R.id.action_setting_InfoFragment_to_settingFragment);
+                    Navigation.findNavController(view).popBackStack();
                 }
             }
         });

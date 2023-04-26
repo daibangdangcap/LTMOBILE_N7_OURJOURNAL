@@ -41,6 +41,7 @@ public class MainPageFragment extends Fragment {
     ImageView imgAvatarUser_toolbar;
     NavigationView navigationView;
     AHBottomNavigation bottomNavigation;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_main_page, container, false);
+        view=inflater.inflate(R.layout.fragment_main_page, container, false);
         imgAvatarUser_toolbar = view.findViewById(R.id.imgUser);
         drawerLayout=view.findViewById(R.id.trangchu);
         imgOurJournal=view.findViewById(R.id.imgOurJournal);
@@ -60,6 +61,7 @@ public class MainPageFragment extends Fragment {
         setBottomNavigation(bottomNavigation);
         navigationView = view.findViewById(R.id.drawerView);
         initMenu();
+        ClickButtonDrawerMenu();
         rvlPost=view.findViewById(R.id.rvPost);
         LoadData();
         PostAdapter postAdapter=new PostAdapter(lsPost);
@@ -77,35 +79,7 @@ public class MainPageFragment extends Fragment {
                     drawerLayout.closeDrawer(GravityCompat.END);
                 }
                 drawerLayout.openDrawer(GravityCompat.END);
-                navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch(item.getItemId())
-                        {
-                            case R.id.nav_Friends:
-                                Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_friendFragment);
-                                break;
-                            case R.id.nav_FriendsRequests:
-                                Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_friendRequestFragment);
-                                break;
-                            case R.id.nav_UserPage:
-                                Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_userpageFragment);
-                                break;
-                            case R.id.nav_Logout:
-                                Intent i=new Intent(getActivity(),LoginActivity.class);
-                                startActivity(i);
-                                break;
-                            case R.id.nav_Map:
-                                Intent intent=new Intent(getActivity(),MapActivity.class);
-                                startActivity(intent);
-                                break;
-                            case R.id.nav_Setting:
-                                Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_settingFragment);
-                                break;
-                        }
-                        return false;
-                    }
-                });
+
             }
         });
     }
@@ -208,5 +182,37 @@ public class MainPageFragment extends Fragment {
         lsPost.add(new Post("kyujin.png","kyujin","hi, im kyujin","kyujin.png"));
         lsPost.add(new Post("sullyoon.png","sullyoon","hi, im sullyoon","sullyoon.png"));
         lsPost.add(new Post("jiwoo.png","jiwoo","hi, im jiwoo","jiwoo.png"));
+    }
+    void ClickButtonDrawerMenu()
+    {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId())
+                {
+                    case R.id.nav_Friends:
+                        Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_friendFragment);
+                        break;
+                    case R.id.nav_FriendsRequests:
+                        Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_friendRequestFragment);
+                        break;
+                    case R.id.nav_UserPage:
+                        Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_userpageFragment);
+                        break;
+                    case R.id.nav_Logout:
+                        Intent i=new Intent(getActivity(),LoginActivity.class);
+                        startActivity(i);
+                        break;
+                    case R.id.nav_Map:
+                        Intent intent=new Intent(getActivity(),MapActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_Setting:
+                        Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_settingFragment);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 }

@@ -39,7 +39,7 @@ public class Setting_PolicyFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                    Navigation.findNavController(view).navigate(R.id.action_setting_PolicyFragment_to_settingFragment);
+                    Navigation.findNavController(view).popBackStack();
 
             }
         });

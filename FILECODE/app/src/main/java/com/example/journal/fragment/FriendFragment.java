@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,9 +37,7 @@ public class FriendFragment extends Fragment {
         btnBack_Friends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), MainPageActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(0, 0);
+                Navigation.findNavController(view).popBackStack();
             }
         });
         rvlFriendsList=view.findViewById(R.id.reListBanBe);
