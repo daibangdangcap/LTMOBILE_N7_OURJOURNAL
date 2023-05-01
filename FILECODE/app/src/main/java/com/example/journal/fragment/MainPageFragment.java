@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -22,11 +23,22 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.example.journal.Adapter.PostAdapter;
+import com.example.journal.HelperClass;
 import com.example.journal.LoginActivity;
 import com.example.journal.MapActivity;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.ktx.Firebase;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -41,6 +53,9 @@ public class MainPageFragment extends Fragment {
     ImageView imgAvatarUser_toolbar;
     NavigationView navigationView;
     AHBottomNavigation bottomNavigation;
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
     View view;
 
     @Override
@@ -60,6 +75,12 @@ public class MainPageFragment extends Fragment {
         bottomNavigation=(AHBottomNavigation) view.findViewById(R.id.bottom_navigation);
         setBottomNavigation(bottomNavigation);
         navigationView = view.findViewById(R.id.drawerView);
+        //FIREBASE
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+        //  INFORMATION
+        final TextView user_name = (TextView) view.findViewById(R.id.tvUserName_drawermenu);
         initMenu();
         ClickButtonDrawerMenu();
         rvlPost=view.findViewById(R.id.rvPost);
@@ -68,6 +89,7 @@ public class MainPageFragment extends Fragment {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         rvlPost.setAdapter(postAdapter);
         rvlPost.setLayoutManager(linearLayoutManager);
+
         return view;
     }
     void initMenu()

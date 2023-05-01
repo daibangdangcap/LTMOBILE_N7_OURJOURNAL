@@ -52,8 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         sendlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              String email = etEmailLogin.getText().toString();
-              String password = etPasslogin.getText().toString();
+              String email = etEmailLogin.getText().toString().trim();
+              String password = etPasslogin.getText().toString().trim();
 
               if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                   if (!password.isEmpty()) {

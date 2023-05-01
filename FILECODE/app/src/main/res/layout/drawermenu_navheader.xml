@@ -23,7 +23,7 @@
         android:id="@+id/tvUserName_drawermenu"
         app:layout_constraintTop_toBottomOf="@id/imgAvatar_drawermenu"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Tên tài khoản"
+        android:text="Duy Ân"
         android:textSize="25dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

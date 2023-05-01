@@ -123,7 +123,7 @@ public class Register extends AppCompatActivity {
         String reenter = etReenterReg.getText().toString().trim();
         String dob = etDOBReg.getText().toString().trim();
         String phone = etPhoneReg.getText().toString().trim();
-
+        String imageAvatar="";
         boolean isValid = checkInfo(fullname, dob,password, reenter, email, phone) && checkEmail(email) && checkPassword(password, reenter) && checkPhone(phone);
         if (rbFemale.isChecked())
         {
@@ -140,7 +140,7 @@ public class Register extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful())
                     {
-                        HelperClass information = new HelperClass(fullname, password, email,phone,gender);
+                        HelperClass information = new HelperClass(fullname, password, email,phone,gender,imageAvatar);
                         FirebaseDatabase.getInstance().getReference("Users").
                             child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(information).addOnCompleteListener(new OnCompleteListener<Void>() {

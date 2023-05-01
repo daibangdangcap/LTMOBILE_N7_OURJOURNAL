@@ -1,16 +1,17 @@
 package com.example.journal;
 
 public class HelperClass {
-    public String fullname, password, email, phone, gender;
+    public String fullname, password, email, phone, gender,image;
 
     public HelperClass()
     {}
-    public HelperClass(String fullname, String password, String email, String phone, String  gender) {
+    public HelperClass(String fullname, String password, String email, String phone, String  gender,String image) {
         this.fullname = fullname;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
+        this.image=image;
     }
 
     public String getFullname() {
