@@ -99,10 +99,19 @@
         android:id="@+id/friendFragment"
         android:name="com.example.journal.fragment.FriendFragment"
         android:label="fragment_friend"
-        tools:layout="@layout/fragment_friend" />
+        tools:layout="@layout/fragment_friend" >
+        <action
+            android:id="@+id/action_friendFragment_to_strangeUserFragment"
+            app:destination="@id/strangeUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/friendRequestFragment"
         android:name="com.example.journal.fragment.FriendRequestFragment"
         android:label="fragment_friend_request"
         tools:layout="@layout/fragment_friend_request" />
+    <fragment
+        android:id="@+id/strangeUserFragment"
+        android:name="com.example.journal.fragment.StrangeUserFragment"
+        android:label="fragment_strange_user"
+        tools:layout="@layout/fragment_strange_user" />
 </navigation>

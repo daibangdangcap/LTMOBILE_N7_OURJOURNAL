@@ -3,7 +3,10 @@ package com.example.journal.fragment;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.Dialog;
+import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -12,6 +15,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -48,6 +55,7 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -57,8 +65,11 @@ import java.util.logging.SimpleFormatter;
 
 
 public class UserpageFragment extends Fragment {
+
+    ActivityResultLauncher<String> launcher;
+    FirebaseDatabase database;
+    FirebaseStorage storage;
     StorageReference storageReference;
-    Uri imageUri;
     Button btnChangeInfo;
     ImageView btnBack;
     ImageView imgAnhDaiDien;
@@ -82,7 +93,6 @@ public class UserpageFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID  = user.getUid();
-
         //information user
         final TextView user_fullname = (TextView) view.findViewById(R.id.tennguoidung);
         final TextView user_dob = (TextView) view.findViewById(R.id.sinhnhatinfo_trangcanhan);
@@ -103,23 +113,9 @@ public class UserpageFragment extends Fragment {
                     user_phone.setText(phone);
                     user_gender.setText(gender);
                     //set hình ảnh từ storage
-                    try {
-                        file=File.createTempFile("image","jpeg");
-                        StorageReference sf=FirebaseStorage.getInstance().getReferenceFromUrl("gs://journal-27ca7.appspot.com").child("imageAvatar/").child(imageAva);
-                        sf.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                Bitmap bitmap=BitmapFactory.decodeFile(file.getAbsolutePath());
-                                imgAnhDaiDien.setImageBitmap(bitmap);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    if(!imageAva.isEmpty())
+                    {
+                        Picasso.get().load(imageAva).placeholder(R.drawable.account_circle).into(imgAnhDaiDien);
                     }
                 }
             }
@@ -130,6 +126,31 @@ public class UserpageFragment extends Fragment {
             }
         });
 
+        database=FirebaseDatabase.getInstance();
+        storage=FirebaseStorage.getInstance();
+        launcher=registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                imgAnhDaiDien.setImageURI(result);
+                storageReference=storage.getInstance().getReference("imgAvatar").child("avatar"+userID);
+                storageReference.putFile(result).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                database.getReference("Users").child(userID).child("image").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(getActivity(), "Cập nhật ảnh thành công", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
 
 
         //Ấn vào ảnh đại diện để xem chi tiết hơn
@@ -144,9 +165,7 @@ public class UserpageFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                    Intent gallery=new Intent(Intent.ACTION_PICK);
-                    gallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//vào gallery để chọn ảnh
-                    startActivityForResult(gallery,GALLERY_REG_CODE);
+                    launcher.launch("image/*");
             }
         });
         btnBack=view.findViewById(R.id.btnBack_trangcanhan);
@@ -172,42 +191,7 @@ public class UserpageFragment extends Fragment {
         return view;
     }
     //hàm save ảnh vào database
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK)
-        {
-            if(requestCode==GALLERY_REG_CODE)
-            {
-                //nếu bằng nhau thì set imgView bằng ảnh đã chọn
-                imageUri=data.getData();
-                imgAnhDaiDien.setImageURI(imageUri);
-            }
-        }
-        String filename="avatar"+userID;
-        storageReference= FirebaseStorage.getInstance().getReference("imageAvatar/"+filename);
-        storageReference.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity(), "Cập nhật ảnh đại diện thành công", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Cập nhật ảnh đại diện thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                });
 
-            reference = FirebaseDatabase.getInstance().getReference("Users");
-            reference.child(userID).child("image").setValue(filename, new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
-                }
-            });
-
-    }
     private void xemAnhDaiDien(int gravity)
     {
         final Dialog dialog=new Dialog(getContext());

@@ -5,12 +5,17 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -85,12 +92,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 Log.e(TAG, "Can't find style. Error: ", e);
             }
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Current Location");
+
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-            googleMap.addMarker(markerOptions);
+            googleMap.addMarker(new MarkerOptions().position(latLng).title("Vị trí của bạn")
+                    .icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.map_human)));
         }
-
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int VectorResId){
+        Drawable VectorDrawable = ContextCompat.getDrawable(context,VectorResId);
+        VectorDrawable.setBounds(0,0,VectorDrawable.getIntrinsicWidth(),
+                VectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(VectorDrawable.getIntrinsicWidth(),
+                VectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888 );
+        Canvas canvas = new Canvas(bitmap);
+        VectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

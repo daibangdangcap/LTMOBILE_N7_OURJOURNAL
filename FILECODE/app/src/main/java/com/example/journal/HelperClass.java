@@ -1,17 +1,34 @@
 package com.example.journal;
 
 public class HelperClass {
-    public String fullname, password, email, phone, gender,image;
+    public String id,fullname, password, email, phone, gender,image;
 
     public HelperClass()
     {}
-    public HelperClass(String fullname, String password, String email, String phone, String  gender,String image) {
+    public HelperClass(String id,String fullname, String password, String email, String phone, String  gender,String image) {
+        this.id=id;
         this.fullname = fullname;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
         this.image=image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getFullname() {

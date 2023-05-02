@@ -3,8 +3,18 @@ package com.example.journal.Model;
 public class FriendsList {
     String nameFriendItem_FriendsList;
     String avatar_FriendsList;
+    String id;
 
-    public FriendsList(String nameFriendItem_FriendsList, String avatar_FriendsList) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public FriendsList(String id, String nameFriendItem_FriendsList, String avatar_FriendsList) {
+        this.id=id;
         this.nameFriendItem_FriendsList = nameFriendItem_FriendsList;
         this.avatar_FriendsList = avatar_FriendsList;
     }

@@ -17,10 +17,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
+    FirebaseFirestore db;
     ImageButton arrowback_register;
     Button btnRegister;
     RadioGroup rgSex;
@@ -140,7 +146,9 @@ public class Register extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful())
                     {
-                        HelperClass information = new HelperClass(fullname, password, email,phone,gender,imageAvatar);
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID  = user.getUid();
+                        HelperClass information = new HelperClass(userID,fullname, password, email,phone,gender,imageAvatar);
                         FirebaseDatabase.getInstance().getReference("Users").
                             child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(information).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -150,6 +158,9 @@ public class Register extends AppCompatActivity {
                                         startActivity(new Intent(Register.this, LoginActivity.class));
                                     }
                                 });
+                        db = FirebaseFirestore.getInstance();
+                        Map<String,Object> datafriendRequest=new HashMap<String, Object>();
+                        db.collection("FriendRequest").document(userID).set(datafriendRequest);
                     }
 
                     else {

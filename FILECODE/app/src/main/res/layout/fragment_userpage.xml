@@ -50,7 +50,7 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="150dp"
                 android:contentDescription="ellipse_6"
-                android:src="@color/white"
+                android:src="@drawable/account_circle"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

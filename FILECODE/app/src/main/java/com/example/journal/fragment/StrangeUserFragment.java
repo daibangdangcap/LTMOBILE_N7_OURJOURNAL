@@ -2,65 +2,92 @@ package com.example.journal.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.journal.HelperClass;
+import com.example.journal.Model.FriendsList;
 import com.example.journal.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StrangeUserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class StrangeUserFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StrangeUserFragment() {
-        // Required empty public constructor
+    ImageView btnBack;
+    ImageView imgAnhDaiDien;
+    String iduser;
+    FirebaseUser user;
+    DatabaseReference databaseReference;
+    Button btnAddFriend;
+    public StrangeUserFragment(String iduser)
+    {
+        this.iduser=iduser;
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StrangeUserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StrangeUserFragment newInstance(String param1, String param2) {
-        StrangeUserFragment fragment = new StrangeUserFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    public StrangeUserFragment(){}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_strange_user, container, false);
+        View view= inflater.inflate(R.layout.fragment_strange_user, container, false);
+        btnBack=view.findViewById(R.id.btnBack_StrangerUserPage);
+        btnAddFriend=view.findViewById(R.id.btnFriendsUserPage_StrangerUserPage);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID=user.getUid();
+        String idstranger=getArguments().getString("id");
+        imgAnhDaiDien=view.findViewById(R.id.imgAvatar_StrangerUserPage);
+        final TextView user_fullname = (TextView) view.findViewById(R.id.tvUserName_StrangerUserPage);
+        final TextView user_dob = (TextView) view.findViewById(R.id.DOBInfo_StrangerUserPage);
+        final TextView user_phone = (TextView) view.findViewById(R.id.PhoneInfo_StrangerUserPage);
+        final TextView user_gender = (TextView) view.findViewById(R.id.SexInfo_StrangerUserPage);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference.child(idstranger).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HelperClass userProfile=snapshot.getValue(HelperClass.class);
+                if(userProfile!=null)
+                {
+                    String fullname = userProfile.fullname;
+                    String phone = userProfile.phone;
+                    String gender = userProfile.gender;
+                    String imageAva= userProfile.image;
+                    user_fullname.setText(fullname);
+                    user_phone.setText(phone);
+                    user_gender.setText(gender);
+                    //set hình ảnh từ storage
+                    if(!imageAva.isEmpty())
+                    {
+                        Picasso.get().load(imageAva).placeholder(R.drawable.account_circle).into(imgAnhDaiDien);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).popBackStack();
+            }
+        });
+        return view;
     }
 }
