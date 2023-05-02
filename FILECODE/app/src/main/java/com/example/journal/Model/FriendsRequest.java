@@ -15,11 +15,24 @@ import com.example.journal.R;
 import java.util.ArrayList;
 
 public class FriendsRequest {
-    public FriendsRequest(String avatar_friendrequest, String nameuser_friendrequest) {
+    public FriendsRequest(String id, String avatar_friendrequest, String nameuser_friendrequest) {
+        this.id = id;
         this.avatar_friendrequest = avatar_friendrequest;
         this.nameuser_friendrequest = nameuser_friendrequest;
     }
+    public FriendsRequest(String id)
+    {
+        this.id=id;
+    }
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    String id;
     String avatar_friendrequest;
 
     public String getAvatar_friendrequest() {
