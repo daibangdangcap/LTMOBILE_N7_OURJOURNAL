@@ -33,6 +33,7 @@ import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -54,15 +55,20 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     DatabaseReference databaseReference;
     FirebaseUser user;
     FirebaseFirestore db;
+
+    public void setLsFriendsList(ArrayList<FriendsList> lsFriendsList) {
+        this.lsFriendsList = lsFriendsList;
+    }
+
     ArrayList<FriendsList> lsFriendsList;
     String userID;
     int state=0;
 Context context;
-FriendsListCallBack friendsListCallBack;
 
-    public FriendsListAdapter(ArrayList<FriendsList> lsFriendsList, FriendsListCallBack friendsListCallBack) {
-        this.lsFriendsList = lsFriendsList;
-        this.friendsListCallBack=friendsListCallBack;
+
+    public FriendsListAdapter(ArrayList<FriendsList> lsFriendsList)
+    {
+        this.lsFriendsList=lsFriendsList;
     }
 
     @NonNull
@@ -93,7 +99,8 @@ FriendsListCallBack friendsListCallBack;
             public void onClick(View view) {
                 Bundle bundle=new Bundle();
                 bundle.putString("id", item.getId());
-                Navigation.findNavController(view).navigate(R.id.action_friendFragment_to_strangeUserFragment,bundle);
+                bundle.putInt("state",state);
+                Navigation.findNavController(view).navigate(R.id.action_searchFragment_to_strangeUserFragment,bundle);
             }
         });
         Map<String,Object> datafriendRequest=new HashMap<String, Object>();
@@ -106,23 +113,58 @@ FriendsListCallBack friendsListCallBack;
                                 {
                                     count++;
                                 }
-                                if(count==0)
+                                if(count==0)//nếu truy vấn không có id của friend receive trong bảng FriendRequest thì set nút button là thêm bạn bè
                                 {
-                                    holder.btnAddFriend.setText("Thêm bạn bè");
-                                    holder.btnAddFriend.setBackgroundColor(Color.BLUE);
-                                    state=0;
+                                    db.collection("MyID").document(userID).collection("MyFriendsID").whereEqualTo("id",item.getId()).get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot querySnapshot) {
+                                                    if(!querySnapshot.isEmpty())
+                                                    {
+                                                        holder.btnConfirm.setVisibility(View.INVISIBLE);
+                                                        holder.btnDelete.setVisibility(View.INVISIBLE);
+                                                        state=3;
+                                                        holder.btnAddFriend.setText("Bạn bè");
+                                                        holder.btnAddFriend.setBackgroundColor(Color.parseColor("#33CC33"));
+                                                    }
+                                                    else
+                                                    {
+                                                        db.collection("FriendReceive").document(userID).collection("FriendRequest").whereEqualTo("id",item.getId()).get()
+                                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                                    @Override
+                                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+                                                                        if(!querySnapshot.isEmpty())
+                                                                        {
+                                                                            state=1;
+                                                                            holder.btnAddFriend.setVisibility(View.INVISIBLE);
+                                                                        }
+                                                                        else {
+                                                                            holder.btnAddFriend.setText("Thêm bạn bè");
+                                                                            holder.btnAddFriend.setBackgroundColor(Color.GRAY);
+                                                                            holder.btnConfirm.setVisibility(View.INVISIBLE);
+                                                                            holder.btnDelete.setVisibility(View.INVISIBLE);
+                                                                            state=0;
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+                                            });
                                 }
-                                else
+                                else//ngược lại thì set đã gửi lời mời
                                 {
+                                    holder.btnConfirm.setVisibility(View.INVISIBLE);
+                                    holder.btnDelete.setVisibility(View.INVISIBLE);
                                     holder.btnAddFriend.setText("Đã gửi lời mời");
                                     holder.btnAddFriend.setBackgroundColor(Color.GRAY);
+                                    state=2;
                                 }
                             }
                         });
         holder.btnAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    if(state==0)
+                    if(state==0)//nếu trạng thái =0 => khi nhấn nút thêm bạn bè đổi màu nút + text thành đã gửi lời mời
                     {
                         Map<String,Object> datafriendRequest=new HashMap<String, Object>();
                         datafriendRequest.put("id",item.getId());
@@ -141,6 +183,8 @@ FriendsListCallBack friendsListCallBack;
         return lsFriendsList.size();
     }
     public class FriendsListViewHolder extends RecyclerView.ViewHolder{
+        Button btnConfirm;
+        Button btnDelete;
         Button btnAddFriend;
         ImageView imgAvatar;
         TextView tvUserName;
@@ -149,11 +193,8 @@ FriendsListCallBack friendsListCallBack;
             imgAvatar=itemView.findViewById(R.id.imgAvatar_FriendsItems);
             tvUserName=itemView.findViewById(R.id.tvNameUser_FriendsItem);
             btnAddFriend=itemView.findViewById(R.id.btnFriends_FriendsItems);
+            btnConfirm=itemView.findViewById(R.id.btnFriendsRequest_FriendsItems);
+            btnDelete=itemView.findViewById(R.id.btnDelete_FriendsItems);
         }
     }
-    public interface FriendsListCallBack
-    {
-        void onNameClick(String id);
-    }
-
 }

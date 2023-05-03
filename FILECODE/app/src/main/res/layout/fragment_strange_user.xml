@@ -67,6 +67,48 @@
                 app:layout_constraintTop_toBottomOf="@id/imgAvatar_StrangerUserPage" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirm_StrangerUserPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="#B6E2A1"
+                android:text="Xác nhận"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:backgroundTint="@null"
+                app:cornerRadius="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName_StrangerUserPage" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDelete_StrangerUserPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="290dp"
+                android:background="#FF6666"
+                android:text="Hủy"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:backgroundTint="@null"
+                app:cornerRadius="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName_StrangerUserPage" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFriendsRequest_StrangerUserPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
+                android:background="#DDDDDD"
+                android:text="Đã gửi lời mời"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:backgroundTint="@null"
+                app:cornerRadius="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName_StrangerUserPage" />
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnFriendsUserPage_StrangerUserPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

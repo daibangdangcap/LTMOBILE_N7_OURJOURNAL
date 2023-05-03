@@ -34,7 +34,37 @@
             android:textSize="25dp"
             app:layout_constraintLeft_toRightOf="@id/imgAvatar_FriendsItems"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFriendsRequest_FriendsItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/imgAvatar_FriendsItems"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Xác nhận"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            app:backgroundTint="@null"
+            android:background="#B6E2A1"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDelete_FriendsItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/btnFriendsRequest_FriendsItems"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="15dp"
+            android:text="Xóa"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            android:background="#FF6666"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
+            android:paddingHorizontal="30dp"
+            />
         <Button
             android:id="@+id/btnFriends_FriendsItems"
             android:layout_width="wrap_content"

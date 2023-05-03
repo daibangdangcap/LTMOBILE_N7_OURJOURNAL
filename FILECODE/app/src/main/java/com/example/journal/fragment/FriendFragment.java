@@ -18,11 +18,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.journal.Adapter.FriendsAdapter;
 import com.example.journal.Adapter.FriendsListAdapter;
 import com.example.journal.HelperClass;
 import com.example.journal.MainPageActivity;
 import com.example.journal.Model.FriendsList;
+import com.example.journal.Model.FriendsRequest;
 import com.example.journal.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,16 +35,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 
 
-public class FriendFragment extends Fragment implements FriendsListAdapter.FriendsListCallBack{
+public class FriendFragment extends Fragment{
     FirebaseUser user;
     RecyclerView rvlFriendsList;
     ArrayList<FriendsList> lsFriendsList;
-    FriendsListAdapter friendsListAdapter;
+    FriendsAdapter friendsAdapter;
     ImageView btnBack_Friends;
+    DatabaseReference databaseReference;
+    FirebaseFirestore db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -53,56 +65,35 @@ public class FriendFragment extends Fragment implements FriendsListAdapter.Frien
             }
         });
         rvlFriendsList=view.findViewById(R.id.reListBanBe);
-        lsFriendsList=new ArrayList<>();
-        friendsListAdapter=new FriendsListAdapter(lsFriendsList,this);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        rvlFriendsList.setAdapter(friendsListAdapter);
-        rvlFriendsList.setLayoutManager(linearLayoutManager);
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userID  = user.getUid();
+        lsFriendsList=new ArrayList<>();
+
+        friendsAdapter=new FriendsAdapter(lsFriendsList);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        rvlFriendsList.setAdapter(friendsAdapter);
+        rvlFriendsList.setLayoutManager(linearLayoutManager);
+        db = FirebaseFirestore.getInstance();
         getListFriendfromDatabase(userID);
         return view;
     }
-    /*void LoadData(){
-        lsFriendsList.add(new FriendsList("lily","lily.png"));
-        lsFriendsList.add(new FriendsList("haewon","haewon.png"));
-        lsFriendsList.add(new FriendsList("jinni","jinni.png"));
-        lsFriendsList.add(new FriendsList("bae","bae.png"));
-        lsFriendsList.add(new FriendsList("jiwoo","jiwoo.png"));
-        lsFriendsList.add(new FriendsList("sullyoon","sullyoon.png"));
-        lsFriendsList.add(new FriendsList("kyujin","kyujin.png"));
-    }*/
+
     private void getListFriendfromDatabase(String userID)
     {
-        FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference=firebaseDatabase.getReference("Users");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot: snapshot.getChildren())
-                {
-                    HelperClass userProFile=dataSnapshot.getValue(HelperClass.class);
-                    String iduser=userProFile.id;
-                    if(!iduser.contentEquals(userID))
-                    {
-                        FriendsList friendsList=new FriendsList(iduser,userProFile.fullname,userProFile.image);
-                        lsFriendsList.add(friendsList);
+        db.collection("MyID").document(userID).collection("MyFriendsID").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        lsFriendsList.clear();
+                        for(DocumentSnapshot snapshot:task.getResult())
+                        {
+                            FriendsList friendsList=new FriendsList(snapshot.getString("id"));
+                            lsFriendsList.add(friendsList);
+                        }
+                        friendsAdapter.notifyDataSetChanged();
                     }
-                }
-                friendsListAdapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Thất bại", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+                });
     }
 
-    @Override
-    public void onNameClick(String id) {
-        Bundle bundle=new Bundle();
-        bundle.putString("id",id);
-        Navigation.findNavController(getView()).navigate(R.id.action_friendFragment_to_strangeUserFragment,bundle);
-    }
+
 }

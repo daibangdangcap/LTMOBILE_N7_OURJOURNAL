@@ -30,26 +30,25 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAdapter.FriendRequestViewHolder> {
+public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder> {
     DatabaseReference databaseReference;
     FirebaseUser user;
     FirebaseFirestore db;
-    ArrayList<FriendsRequest> lsFriendRequest;
+    ArrayList<FriendsList> lsFriendList;
     Context context;
-    FriendRequestCallBack friendRequestCallBack;
     String userID;
-    public FriendsRequestAdapter(ArrayList<FriendsRequest> lsFriendRequest) {
-        this.lsFriendRequest = lsFriendRequest;
+    public FriendsAdapter(ArrayList<FriendsList> lsFriendList) {
+        this.lsFriendList = lsFriendList;
     }
     @NonNull
     @Override
-    public FriendsRequestAdapter.FriendRequestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FriendsAdapter.FriendsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         context=parent.getContext();
         LayoutInflater inflater=LayoutInflater.from(context);
-        View view=inflater.inflate(R.layout.loimoiketban_layout,parent,false);
+        View view=inflater.inflate(R.layout.frienditem_layout,parent,false);
         //
-        FriendsRequestAdapter.FriendRequestViewHolder viewHolder=new FriendsRequestAdapter.FriendRequestViewHolder(view);
+        FriendsAdapter.FriendsViewHolder viewHolder=new FriendsAdapter.FriendsViewHolder(view);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID=user.getUid();
 
@@ -58,8 +57,8 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FriendsRequestAdapter.FriendRequestViewHolder holder, int position) {
-        FriendsRequest item=lsFriendRequest.get(position);
+    public void onBindViewHolder(@NonNull FriendsAdapter.FriendsViewHolder holder, int position) {
+        FriendsList item=lsFriendList.get(position);
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.child(item.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,11 +66,11 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
                 HelperClass userProfile = snapshot.getValue(HelperClass.class);
                 if(userProfile!=null)
                 {
-                    item.setAvatar_friendrequest(userProfile.getImage());
-                    item.setNameuser_friendrequest(userProfile.getFullname());
-                    holder.tvUserName.setText(item.getNameuser_friendrequest());
-                    if(!item.getAvatar_friendrequest().isEmpty())
-                    {Picasso.get().load(item.getAvatar_friendrequest()).placeholder(R.drawable.account_circle).into(holder.imgAvatar);}
+                    item.setAvatar_FriendsList(userProfile.getImage());
+                    item.setNameFriendItem_FriendsList(userProfile.getFullname());
+                    holder.tvUserName.setText(item.getNameFriendItem_FriendsList());
+                    if(!item.getAvatar_FriendsList().isEmpty())
+                    {Picasso.get().load(item.getAvatar_FriendsList()).placeholder(R.drawable.account_circle).into(holder.imgAvatar);}
                 }
             }
             @Override
@@ -82,10 +81,7 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
         holder.tvUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle=new Bundle();
-                bundle.putString("id", item.getId());
-                bundle.putInt("state",1);
-                Navigation.findNavController(view).navigate(R.id.action_friendRequestFragment_to_strangeUserFragment,bundle);
+
             }
         });
 
@@ -93,22 +89,17 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
 
     @Override
     public int getItemCount() {
-        return lsFriendRequest.size();
+        return lsFriendList.size();
     }
-    public class FriendRequestViewHolder extends RecyclerView.ViewHolder{
+    public class FriendsViewHolder extends RecyclerView.ViewHolder{
         ImageView imgAvatar;
         TextView tvUserName;
-        Button btnXacnhan;
-        Button btnHuy;
-        public FriendRequestViewHolder(@NonNull View itemView) {
+        Button btnFriend;
+        public FriendsViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgAvatar=itemView.findViewById(R.id.imgAvatar_FriendsRequestItems);
-            tvUserName=itemView.findViewById(R.id.tvNameUser_FriendsRequestItem);
-            btnXacnhan=itemView.findViewById(R.id.btnFriendsRequest_FriendsRequestItems);
-            btnHuy=itemView.findViewById(R.id.btnDelete_FriendsRequestItems);
+            imgAvatar=itemView.findViewById(R.id.imgAvatar_FriendslistItems);
+            tvUserName=itemView.findViewById(R.id.tvNameUser_FriendslistItem);
+            btnFriend=itemView.findViewById(R.id.btnFriends_FriendslistItems);
         }
-    }
-    public interface FriendRequestCallBack{
-
     }
 }

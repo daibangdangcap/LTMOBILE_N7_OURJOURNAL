@@ -5,6 +5,10 @@ public class FriendsList {
     String avatar_FriendsList;
     String id;
 
+    public FriendsList(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

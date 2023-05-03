@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/btnBack_Search" />
     <LinearLayout
+        android:id="@+id/search"
         android:layout_width="360dp"
         android:layout_height="50dp"
         android:background="@drawable/rectangle_9"
@@ -52,6 +53,13 @@
             android:scaleX="1.10"
             android:scaleY="1.10"/>
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rvSearch"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search"
+        />
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
         android:id="@+id/bottom_navigation"
         android:layout_width="wrap_content"

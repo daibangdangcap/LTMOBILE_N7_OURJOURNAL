@@ -160,7 +160,8 @@ public class Register extends AppCompatActivity {
                                 });
                         db = FirebaseFirestore.getInstance();
                         Map<String,Object> datafriendRequest=new HashMap<String, Object>();
-                        db.collection("FriendRequest").document(userID).collection("FriendReceive");
+                        db.collection("FriendRequest").document(userID).set(datafriendRequest);
+                        db.collection("FriendReceive").document(userID).set(datafriendRequest);
                     }
 
                     else {
