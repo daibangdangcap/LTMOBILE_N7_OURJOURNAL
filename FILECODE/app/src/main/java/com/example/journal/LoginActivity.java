@@ -16,10 +16,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.journal.fragment.ForgetPasswordFragment;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,7 +32,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.util.GAuthToken;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String FILE_USERNAME = "rememberMe";
     //
     ImageButton arrowbackregister;
     EditText etEmailLogin, etPasslogin;
@@ -48,20 +49,23 @@ public class LoginActivity extends AppCompatActivity {
         sendlogin = findViewById(R.id.sendLogin);
         forgotPassword = findViewById(R.id.tvForgetpass);
         auth = FirebaseAuth.getInstance();
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.login_progressbar);
+        progressBar.setVisibility(View.GONE);
 
         sendlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               String email = etEmailLogin.getText().toString().trim();
               String password = etPasslogin.getText().toString().trim();
-
-              if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+              progressBar.setVisibility(View.VISIBLE);
+                if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                   if (!password.isEmpty()) {
                       auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                           @Override
                           public void onSuccess(AuthResult authResult) {
                               Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                               startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
+                              progressBar.setVisibility(View.GONE);
                               finish();
                           }
                       }).addOnFailureListener(new OnFailureListener() {
