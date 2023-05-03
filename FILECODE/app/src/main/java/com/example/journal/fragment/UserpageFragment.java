@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -109,6 +110,7 @@ public class UserpageFragment extends Fragment {
                     String phone = userProfile.phone;
                     String gender = userProfile.gender;
                     imageAva= userProfile.image;
+                    //SHOW
                     user_fullname.setText(fullname);
                     user_phone.setText(phone);
                     user_gender.setText(gender);
@@ -139,6 +141,7 @@ public class UserpageFragment extends Fragment {
                         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
+                                UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder().setDisplayName(fullname).setPhotoUri(uri).build();
                                 database.getReference("Users").child(userID).child("image").setValue(uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {

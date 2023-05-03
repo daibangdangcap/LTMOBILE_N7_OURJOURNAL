@@ -3,7 +3,8 @@ package com.example.journal.Model;
 public class Post {
     String avatar;
     String username;
-
+    String image;
+    String caption;
     public String getImage() {
         return image;
     }
@@ -11,8 +12,6 @@ public class Post {
     public void setImage(String image) {
         this.image = image;
     }
-
-    String image;
 
     public String getAvatar() {
         return avatar;
@@ -48,6 +47,6 @@ public class Post {
         this.caption = caption;
     }
 
-    String caption;
+
 
 }
