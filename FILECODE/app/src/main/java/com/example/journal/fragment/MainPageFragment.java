@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+import com.bumptech.glide.Glide;
 import com.example.journal.Adapter.PostAdapter;
 import com.example.journal.HelperClass;
 import com.example.journal.LoginActivity;
@@ -40,6 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ktx.Firebase;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -52,6 +54,7 @@ public class MainPageFragment extends Fragment {
     RecyclerView rvlPost;
     //JOURNAL
     TextView tvOurJournal;
+    private String imageAva;
 
     View topBar;
     private DrawerLayout drawerLayout;
@@ -97,6 +100,7 @@ public class MainPageFragment extends Fragment {
         //JOURNAL
         String text = "<font color =#000000>J</font><font color =#71C2CA>o</font><font color=#A5CDA7>u</font><font color=#E8DB7B>r</font><font color=#000000>nal</font>";
         tvOurJournal.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
+        updateNavHeader();
         return view;
     }
     void initMenu()
@@ -195,4 +199,32 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
+    public void updateNavHeader()
+    {
+        NavigationView navigationview = (NavigationView) view.findViewById(R.id.drawerView);
+        View headerview = navigationview.getHeaderView(0);
+        reference.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HelperClass userProfile = snapshot.getValue(HelperClass.class);
+                ImageView navUserPhoto = headerview.findViewById(R.id.imgAvatar_drawermenu);
+                TextView navUsername = headerview.findViewById(R.id.tvUserName_drawermenu);
+                imageAva= userProfile.image;
+                //SHOW
+                navUsername.setText(userProfile.fullname);
+                //GLIDE SHOW AVATAR
+                if(!imageAva.isEmpty())
+                {
+                    Picasso.get().load(imageAva).placeholder(R.drawable.account_circle).into(navUserPhoto);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
 }
