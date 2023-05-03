@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragment.PostingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
     <EditText
         android:id="@+id/Caption_UpPost"
         android:layout_width="match_parent"
@@ -104,15 +101,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
-        android:id="@+id/OurJournal_DangBai"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="our_journal_1_ek1"
-        android:src="@drawable/drawermenu_ourjournal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btnBack_UpPost"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,20 +34,21 @@
             app:layout_constraintRight_toRightOf="@id/vTopBar"
             android:id="@+id/imgUser"/>
 
-        <ImageView
-            android:id="@+id/imgOurJournal"
+        <TextView
+            android:fontFamily="@font/inter"
+            android:id="@+id/tvOurJournal"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:src="@drawable/drawermenu_ourjournal"
             android:paddingLeft="16dp"
             app:layout_constraintStart_toStartOf="@id/vTopBar"
             app:layout_constraintTop_toTopOf="@id/vTopBar"
-            app:layout_constraintWidth_percent="0.35"/>
+            app:layout_constraintWidth_percent="0.35"
+            android:textSize="28sp"/>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imgOurJournal"
+            app:layout_constraintTop_toBottomOf="@id/tvOurJournal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

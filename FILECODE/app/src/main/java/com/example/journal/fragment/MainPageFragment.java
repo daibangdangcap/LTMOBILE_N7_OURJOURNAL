@@ -2,6 +2,7 @@ package com.example.journal.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,7 +50,9 @@ public class MainPageFragment extends Fragment {
 
     ArrayList<Post> lsPost;
     RecyclerView rvlPost;
-    ImageView imgOurJournal;
+    //JOURNAL
+    TextView tvOurJournal;
+
     View topBar;
     private DrawerLayout drawerLayout;
     ImageView imgAvatarUser_toolbar;
@@ -72,7 +75,7 @@ public class MainPageFragment extends Fragment {
         view=inflater.inflate(R.layout.fragment_main_page, container, false);
         imgAvatarUser_toolbar = view.findViewById(R.id.imgUser);
         drawerLayout=view.findViewById(R.id.trangchu);
-        imgOurJournal=view.findViewById(R.id.imgOurJournal);
+        tvOurJournal=view.findViewById(R.id.tvOurJournal);
         topBar=view.findViewById(R.id.vTopBar);
         menubottom = view.findViewById(R.id.navMenu);
         navigationView = view.findViewById(R.id.drawerView);
@@ -91,7 +94,9 @@ public class MainPageFragment extends Fragment {
         rvlPost.setAdapter(postAdapter);
         rvlPost.setLayoutManager(linearLayoutManager);
         menubottom.setOnItemSelectedListener(getListener());
-
+        //JOURNAL
+        String text = "<font color =#000000>J</font><font color =#71C2CA>o</font><font color=#A5CDA7>u</font><font color=#E8DB7B>r</font><font color=#000000>nal</font>";
+        tvOurJournal.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
         return view;
     }
     void initMenu()
@@ -118,7 +123,7 @@ public class MainPageFragment extends Fragment {
     void setVisibility()
     {
         imgAvatarUser_toolbar.setVisibility(View.INVISIBLE);
-        imgOurJournal.setVisibility(View.INVISIBLE);
+        tvOurJournal.setVisibility(View.INVISIBLE);
         topBar.setVisibility(View.INVISIBLE);
         rvlPost.setVisibility(View.INVISIBLE);
     }
@@ -143,7 +148,7 @@ public class MainPageFragment extends Fragment {
     void setVisibility_Bottom()
     {
         imgAvatarUser_toolbar.setVisibility(View.INVISIBLE);
-        imgOurJournal.setVisibility(View.INVISIBLE);
+        tvOurJournal.setVisibility(View.INVISIBLE);
         topBar.setVisibility(View.INVISIBLE);
         rvlPost.setVisibility(View.INVISIBLE);
     }

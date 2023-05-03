@@ -5,49 +5,29 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.SearchFragment"
-    android:background="#F4F3F3">
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:id="@+id/toolbar_Search"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/imgOurJournal_Seach"
-            android:src="@drawable/drawermenu_ourjournal"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:src="@drawable/account_circle"
-            android:layout_gravity="end"
-            android:layout_marginRight="5dp"
-            />
-    </androidx.appcompat.widget.Toolbar>
+    android:background="#F4F3F3"
+    android:paddingTop="30dp">
+
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/arrow_back_ios_new"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/black_arrow_back"
         android:background="@null"
         android:layout_weight="1"
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_Search"
-        android:id="@+id/btnBack_Search"
-        android:scaleX="1.25"
-        android:scaleY="1.25"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/btnBack_Search" />
     <LinearLayout
         android:layout_width="360dp"
         android:layout_height="50dp"
         android:background="@drawable/rectangle_9"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_Search"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/btnBack_Search"
+        app:layout_constraintRight_toRightOf="parent"
         android:paddingLeft="15dp"
-        android:layout_marginLeft="15dp"
+        android:paddingRight="10dp"
+        android:layout_marginRight="15dp"
         >
         <EditText
             android:layout_width="match_parent"
