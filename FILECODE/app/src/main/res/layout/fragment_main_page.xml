@@ -60,12 +60,21 @@
                 app:layout_constraintTop_toTopOf="parent">
             </androidx.recyclerview.widget.RecyclerView>
         </ScrollView>
-        <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-            android:id="@+id/bottom_navigation"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rectangle_7_shape"
+            android:elevation="20dp"
+            app:itemIconSize="35dp"
+            app:itemIconTint="@drawable/botnav_itemselector"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:menu="@menu/menubottom"></com.google.android.material.bottomnavigation.BottomNavigationView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

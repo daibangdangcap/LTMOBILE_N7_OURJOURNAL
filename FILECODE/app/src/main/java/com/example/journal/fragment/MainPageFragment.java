@@ -28,6 +28,8 @@ import com.example.journal.LoginActivity;
 import com.example.journal.MapActivity;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,7 +54,7 @@ public class MainPageFragment extends Fragment {
     private DrawerLayout drawerLayout;
     ImageView imgAvatarUser_toolbar;
     NavigationView navigationView;
-    AHBottomNavigation bottomNavigation;
+    BottomNavigationView menubottom;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -72,8 +74,7 @@ public class MainPageFragment extends Fragment {
         drawerLayout=view.findViewById(R.id.trangchu);
         imgOurJournal=view.findViewById(R.id.imgOurJournal);
         topBar=view.findViewById(R.id.vTopBar);
-        bottomNavigation=(AHBottomNavigation) view.findViewById(R.id.bottom_navigation);
-        setBottomNavigation(bottomNavigation);
+        menubottom = view.findViewById(R.id.navMenu);
         navigationView = view.findViewById(R.id.drawerView);
         //FIREBASE
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -89,6 +90,7 @@ public class MainPageFragment extends Fragment {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         rvlPost.setAdapter(postAdapter);
         rvlPost.setLayoutManager(linearLayoutManager);
+        menubottom.setOnItemSelectedListener(getListener());
 
         return view;
     }
@@ -118,74 +120,25 @@ public class MainPageFragment extends Fragment {
         imgAvatarUser_toolbar.setVisibility(View.INVISIBLE);
         imgOurJournal.setVisibility(View.INVISIBLE);
         topBar.setVisibility(View.INVISIBLE);
-        bottomNavigation.setVisibility(View.INVISIBLE);
         rvlPost.setVisibility(View.INVISIBLE);
     }
-    void setBottomNavigation(AHBottomNavigation bottomNavigation)
-    {
-        // Create items
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.tab_1, R.drawable.bt_home, R.color.yellow);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.tab_2, R.drawable.bt_add, R.color.cyan);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.tab_3, R.drawable.bt_search, R.color.dark_blue);
-
-        // Add items
-        bottomNavigation.addItem(item1);
-        bottomNavigation.addItem(item2);
-        bottomNavigation.addItem(item3);
-
-        bottomNavigation.setColored(true);
-        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE_FORCE);
-
-        //notification
-        AHNotification notification = new AHNotification.Builder()
-                .setText("")
-                .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red))
-                .setTextColor(ContextCompat.getColor(getContext(), R.color.white))
-                .build();
-        bottomNavigation.setNotification(notification, 1);
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+    private NavigationBarView.OnItemSelectedListener getListener(){
+        return (new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
-                switch (position)
-                {
-                    case 0:
-                    {
-                        if(wasSelected==false)
-                        {
-                            setVisibility_Bottom();
-                            Fragment fragment=new MainPageFragment();
-                            FragmentTransaction fmTran = getActivity().getSupportFragmentManager().beginTransaction();
-                            fmTran.replace(R.id.trangchinh,fragment);
-                            fmTran.addToBackStack(null);
-                            fmTran.commit();
-                        }
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.mnHome:
+                        //Navigation.findNavController(view).navigate(R.id.);
                         break;
-                    }
-                    case 1:
-                    {
-
-                        setVisibility_Bottom();
-                        Fragment fragment=new PostingFragment();
-                        FragmentTransaction fmTran = getActivity().getSupportFragmentManager().beginTransaction();
-                        fmTran.replace(R.id.trangchinh,fragment);
-                        fmTran.addToBackStack(null);
-                        fmTran.commit();
+                    case R.id.mnAdd:
+                        Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_postingFragment);
                         break;
-                    }
-                    default: {
-                        setVisibility_Bottom();
-                        Fragment fragment = new SearchFragment();
-                        FragmentTransaction fmTran = getActivity().getSupportFragmentManager().beginTransaction();
-                        fmTran.replace(R.id.trangchinh, fragment);
-                        fmTran.addToBackStack(null);
-                        fmTran.commit();
-                        break;
-                    }
+                    case R.id.mnSearch:
+                        Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_searchFragment);
                 }
-                return true;
+                return false;
             }
         });
-
     }
     void setVisibility_Bottom()
     {

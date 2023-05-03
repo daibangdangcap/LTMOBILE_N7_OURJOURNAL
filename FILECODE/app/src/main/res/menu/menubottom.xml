@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Home"  android:id="@+id/mnHome"
+        android:icon="@drawable/bt_home"/>
+    <item android:title="Add" android:id="@+id/mnAdd"
+        android:icon="@drawable/bt_add"/>
+    <item android:title="Search" android:id="@+id/mnSearch"
+        android:icon="@drawable/bt_search"/>
+</menu>

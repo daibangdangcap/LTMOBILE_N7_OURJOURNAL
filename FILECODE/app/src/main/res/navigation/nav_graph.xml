@@ -89,6 +89,12 @@
         <action
             android:id="@+id/action_mainPageFragment_to_friendRequestFragment"
             app:destination="@id/friendRequestFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_postingFragment"
+            app:destination="@id/postingFragment" />
     </fragment>
     <fragment
         android:id="@+id/userpageFragment"
@@ -114,4 +120,14 @@
         android:name="com.example.journal.fragment.StrangeUserFragment"
         android:label="fragment_strange_user"
         tools:layout="@layout/fragment_strange_user" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.journal.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/postingFragment"
+        android:name="com.example.journal.fragment.PostingFragment"
+        android:label="fragment_posting"
+        tools:layout="@layout/fragment_posting" />
 </navigation>
