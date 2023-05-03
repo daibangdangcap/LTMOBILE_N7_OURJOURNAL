@@ -9,7 +9,6 @@
     android:background="#A9D390"
     android:id="@+id/TrangDangnhap"
     >
-
     <ImageButton
         android:id="@+id/arrowback_register"
         android:layout_width="60dp"
@@ -137,4 +136,13 @@
         android:textColor="@color/black"
         android:fontFamily="@font/inter"
         />
+    <ProgressBar
+    android:id="@+id/login_progressbar"
+    android:layout_width="200dip"
+    android:layout_height="200dip"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+    />
 </androidx.constraintlayout.widget.ConstraintLayout>

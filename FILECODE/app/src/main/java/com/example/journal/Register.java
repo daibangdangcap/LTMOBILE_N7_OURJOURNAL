@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ public class Register extends AppCompatActivity {
     RadioButton rbMale, rbFemale;
     String gender ="";
     EditText etDOBReg, etPasswordReg, etReenterReg, etEmailReg, etPhoneReg, etFullname;
+    //PROGRESSBAR
+    ProgressBar progressBar;
     //FIREBASE
     FirebaseAuth auth;
     DatabaseReference reference;
@@ -54,7 +57,9 @@ public class Register extends AppCompatActivity {
         rbFemale = findViewById(R.id.rbFemale);
         //firebase
         auth = FirebaseAuth.getInstance();
-
+        //progressbar
+        ProgressBar progressBar =  findViewById(R.id.register_progressbar);
+        progressBar.setVisibility(View.GONE);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +125,7 @@ public class Register extends AppCompatActivity {
     void sukienRegister()
     {
         //sex =1 la male, sex =0 la female
-
+        progressBar.setVisibility(View.VISIBLE);
         //firebaseDatabase = FirebaseDatabase.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         String fullname = etFullname.getText().toString().trim();
@@ -154,6 +159,7 @@ public class Register extends AppCompatActivity {
                             .setValue(information).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        progressBar.setVisibility(View.GONE);
                                         Toast.makeText(Register.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(Register.this, LoginActivity.class));
                                     }
@@ -165,6 +171,7 @@ public class Register extends AppCompatActivity {
                     }
 
                     else {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(Register.this, "Đăng ký thất bại!" +task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
