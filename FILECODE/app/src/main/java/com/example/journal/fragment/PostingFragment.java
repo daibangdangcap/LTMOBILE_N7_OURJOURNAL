@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.journal.Adapter.ImagesDangBaiAdapter;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 
 
 public class PostingFragment extends Fragment {
+    ImageView btnBack;
     RecyclerView recyclerView;
     Button addImages_upPost;
     ArrayList<Uri> arrayListUri=new ArrayList<Uri>();
@@ -42,6 +45,7 @@ public class PostingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_posting, container, false);
+        btnBack=view.findViewById(R.id.btnBack_UpPost);
         recyclerView=view.findViewById(R.id.rvListAnh_DangBai);
         adapter=new ImagesDangBaiAdapter(arrayListUri);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),3);
@@ -69,6 +73,12 @@ public class PostingFragment extends Fragment {
                 }
                 //i.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(i,"Select Picture"),PICK_IMAGE);
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).popBackStack();
             }
         });
         return view;

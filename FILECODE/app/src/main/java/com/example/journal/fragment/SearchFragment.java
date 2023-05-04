@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,11 +49,13 @@ public class SearchFragment extends Fragment {
     EditText edSearch;
     ImageButton imgSearch;
     RecyclerView rvList;
+    ImageButton btnBack;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_search, container, false);
+        btnBack=view.findViewById(R.id.btnBack_Search);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID=user.getUid();
         edSearch=view.findViewById(R.id.edInputSearch_Search);
@@ -87,7 +90,12 @@ public class SearchFragment extends Fragment {
                 SearchList(edSearch.getText().toString());
             }
         });
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).popBackStack();
+            }
+        });
         return view;
     }
     public void SearchList(String text)

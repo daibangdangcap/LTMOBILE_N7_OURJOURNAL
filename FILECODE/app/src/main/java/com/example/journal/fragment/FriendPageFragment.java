@@ -1,13 +1,20 @@
 package com.example.journal.fragment;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,13 +44,14 @@ public class FriendPageFragment extends Fragment {
     Button btnFriend;
     Button btnDelete;
     Button btnFriendRequest;
-
+    String userID;
+    String idstranger;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_friend_page, container, false);
-        String idstranger = getArguments().getString("id");
+        idstranger = getArguments().getString("id");
         final TextView user_fullname = (TextView) view.findViewById(R.id.tvUserName_FriendsUserPage);
         final TextView user_dob = (TextView) view.findViewById(R.id.DOBInfo_FriendsUserPage);
         final TextView user_phone = (TextView) view.findViewById(R.id.PhoneInfo_FriendsUserPage);
@@ -56,7 +64,7 @@ public class FriendPageFragment extends Fragment {
         btnConfirmDelete.setVisibility(View.INVISIBLE);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = user.getUid();
+        userID = user.getUid();
         db = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.child(idstranger).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -85,6 +93,53 @@ public class FriendPageFragment extends Fragment {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DeleteFriend(Gravity.CENTER);
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).popBackStack();
+            }
+        });
+        return view;
+    }
+    private void DeleteFriend(int gravity)
+    {
+        final Dialog dialog=new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog_deletefriend);
+        Window window=dialog.getWindow();
+        if(window==null) return;
+        else {
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            WindowManager.LayoutParams windowAttributes=window.getAttributes();
+            windowAttributes.gravity= gravity;
+            window.setAttributes(windowAttributes);
+            if(Gravity.BOTTOM!=gravity)
+            {
+                dialog.setCancelable(true);
+            }
+            else {
+                dialog.setCancelable(false);
+            }
+        }
+        Button btnYes;
+        Button btnNo;
+        btnYes=dialog.findViewById(R.id.btnYes);
+        btnNo=dialog.findViewById(R.id.btnNo);
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.setCancelable(true);
+                dialog.dismiss();
+            }
+        });
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 btnFriend.setVisibility(View.INVISIBLE);
                 btnDelete.setVisibility(View.INVISIBLE);
                 btnConfirmDelete.setVisibility(View.VISIBLE);
@@ -101,9 +156,10 @@ public class FriendPageFragment extends Fragment {
 
                     }
                 });
+                dialog.setCancelable(true);
+                dialog.dismiss();
             }
         });
-        return view;
+        dialog.show();
     }
-
 }
