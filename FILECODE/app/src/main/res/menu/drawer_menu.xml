@@ -15,6 +15,7 @@
             android:icon="@drawable/drawermenu_friends"
             android:title="Bạn bè"
             />
+
         <item
             android:id="@+id/nav_FriendsRequests"
             android:icon="@drawable/drawermenu_addfriends"

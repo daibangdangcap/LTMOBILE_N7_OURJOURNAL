@@ -32,8 +32,11 @@ import com.example.journal.Adapter.PostAdapter;
 import com.example.journal.HelperClass;
 import com.example.journal.LoginActivity;
 import com.example.journal.MapActivity;
+import com.example.journal.Model.FriendsRequest;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -44,6 +47,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ktx.Firebase;
 import com.squareup.picasso.Picasso;
 
@@ -53,7 +59,7 @@ import java.util.ArrayList;
 
 
 public class MainPageFragment extends Fragment {
-
+    public static TextView tv_count_friend;
     ArrayList<Post> lsPost;
     RecyclerView rvlPost;
     //JOURNAL
@@ -106,6 +112,10 @@ public class MainPageFragment extends Fragment {
         String text = "<font color =#000000>J</font><font color =#71C2CA>o</font><font color=#A5CDA7>u</font><font color=#E8DB7B>r</font><font color=#000000>nal</font>";
         tvOurJournal.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
         updateNavHeader();
+        LayoutInflater layoutInflater=LayoutInflater.from(getContext());
+        tv_count_friend=(TextView) layoutInflater.inflate(R.layout.counter_friend,null);
+        navigationView.getMenu().findItem(R.id.nav_FriendsRequests).setActionView(tv_count_friend);
+        ShowCounter();
         return view;
     }
     void initMenu()
@@ -232,8 +242,29 @@ public class MainPageFragment extends Fragment {
 
             }
         });
-
-
+    }
+    public void ShowCounter()
+    {
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        db.collection("FriendReceive").document(userID).collection("FriendRequest").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(DocumentSnapshot snapshot:task.getResult())
+                        {
+                            int count=0;
+                            count = task.getResult().size();
+                            if(count>0)
+                            {
+                                tv_count_friend.setText(Integer.toString(count));
+                            }
+                            else {
+                                tv_count_friend.setText("");
+                                tv_count_friend.setBackground(null);
+                            }
+                        }
+                    }
+                });
     }
 
 }
