@@ -23,9 +23,9 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="59dp"
                 android:layout_marginTop="8dp"
-                android:layout_width="157dp"
+                android:layout_width="wrap_content"
                 android:layout_height="62dp"
-                android:text="Bạn Bè"
+                android:text=""
                 />
         </RelativeLayout>
         <ScrollView android:id="@+id/trang_b_n_b_"

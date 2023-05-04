@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.journal.Adapter.FriendsAdapter;
@@ -50,8 +51,8 @@ public class FriendFragment extends Fragment{
     ArrayList<FriendsList> lsFriendsList;
     FriendsAdapter friendsAdapter;
     ImageView btnBack_Friends;
-    DatabaseReference databaseReference;
     FirebaseFirestore db;
+    TextView tvFriends;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -68,7 +69,7 @@ public class FriendFragment extends Fragment{
         user = FirebaseAuth.getInstance().getCurrentUser();
         String userID  = user.getUid();
         lsFriendsList=new ArrayList<>();
-
+        tvFriends = view.findViewById(R.id.tvBanBe);
         friendsAdapter=new FriendsAdapter(lsFriendsList);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         rvlFriendsList.setAdapter(friendsAdapter);
@@ -89,6 +90,10 @@ public class FriendFragment extends Fragment{
                         {
                             FriendsList friendsList=new FriendsList(snapshot.getString("id"));
                             lsFriendsList.add(friendsList);
+                            int count =0;
+                            count = task.getResult().size();
+                            tvFriends.setText("Bạn bè (" + Integer.toString(count)+")");
+                          //  Toast.makeText(getActivity(),Integer.toString( count),Toast.LENGTH_SHORT).show();
                         }
                         friendsAdapter.notifyDataSetChanged();
                     }
