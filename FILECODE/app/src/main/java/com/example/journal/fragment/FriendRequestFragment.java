@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.journal.Adapter.FriendsRequestAdapter;
 import com.example.journal.HelperClass;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 
 
 public class FriendRequestFragment extends Fragment {
+    TextView tvFriendRequest;
     FirebaseUser user;
     RecyclerView recyclerView;
     ImageView btnBack_FriendsRequest;
@@ -52,6 +54,7 @@ public class FriendRequestFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_friend_request, container, false);
+        tvFriendRequest=view.findViewById(R.id.tvFriendsRequests);
         btnBack_FriendsRequest=view.findViewById(R.id.btnBack_FriendsRequests);
         btnBack_FriendsRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +95,9 @@ public class FriendRequestFragment extends Fragment {
                             {
                                 FriendsRequest friendsRequest=new FriendsRequest(snapshot.getString("id"));
                                 lsFriendRequest.add(friendsRequest);
+                                int count =0;
+                                count = task.getResult().size();
+                                tvFriendRequest.setText("Lời mời kết bạn (" + Integer.toString(count)+")");
                             }
                             friendsRequestAdapter.notifyDataSetChanged();
                         }

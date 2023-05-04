@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -58,7 +59,7 @@ public class MainPageFragment extends Fragment {
     //JOURNAL
     TextView tvOurJournal;
     private String imageAva;
-
+    Toolbar toolbar;
     View topBar;
     private DrawerLayout drawerLayout;
     ImageView imgAvatarUser_toolbar;
@@ -79,6 +80,7 @@ public class MainPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_main_page, container, false);
+        toolbar=view.findViewById(R.id.toolbar);
         imgAvatarUser_toolbar = view.findViewById(R.id.imgUser);
         drawerLayout=view.findViewById(R.id.trangchu);
         tvOurJournal=view.findViewById(R.id.tvOurJournal);

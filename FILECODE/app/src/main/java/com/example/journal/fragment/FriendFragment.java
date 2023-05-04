@@ -51,8 +51,10 @@ public class FriendFragment extends Fragment{
     ArrayList<FriendsList> lsFriendsList;
     FriendsAdapter friendsAdapter;
     ImageView btnBack_Friends;
+    DatabaseReference databaseReference;
     FirebaseFirestore db;
     TextView tvFriends;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -93,7 +95,6 @@ public class FriendFragment extends Fragment{
                             int count =0;
                             count = task.getResult().size();
                             tvFriends.setText("Bạn bè (" + Integer.toString(count)+")");
-                          //  Toast.makeText(getActivity(),Integer.toString( count),Toast.LENGTH_SHORT).show();
                         }
                         friendsAdapter.notifyDataSetChanged();
                     }
