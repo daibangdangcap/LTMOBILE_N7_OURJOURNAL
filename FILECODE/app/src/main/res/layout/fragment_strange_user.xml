@@ -59,7 +59,7 @@
                 android:id="@+id/tvUserName_StrangerUserPage"
                 android:layout_width="wrap_content"
                 android:layout_height="61dp"
-                android:text="peongox"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="32sp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -141,7 +141,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="78dp"
                     android:layout_marginRight="20dp"
-                    android:text="0707900xxx"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
@@ -153,7 +153,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="132dp"
                     android:layout_marginRight="20dp"
-                    android:text="Nữ"
+                    android:text=""
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="20sp" />

@@ -13,7 +13,6 @@
         android:id="@+id/imgAvatar_drawermenu"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/userpage_avatar"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         />
@@ -23,7 +22,7 @@
         android:id="@+id/tvUserName_drawermenu"
         app:layout_constraintTop_toBottomOf="@id/imgAvatar_drawermenu"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="Duy Ân"
+        android:text=""
         android:textSize="25dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

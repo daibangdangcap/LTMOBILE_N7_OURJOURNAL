@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmailLogin, etPasslogin;
     MaterialButton sendlogin;
     FirebaseAuth auth;
+    CheckBox rememberme;
     TextView forgotPassword;
 
     @Override
@@ -48,7 +51,14 @@ public class LoginActivity extends AppCompatActivity {
         etPasslogin = findViewById(R.id.etPassLogin);
         sendlogin = findViewById(R.id.sendLogin);
         forgotPassword = findViewById(R.id.tvForgetpass);
+        rememberme = findViewById(R.id.tvRememberme);
         auth = FirebaseAuth.getInstance();
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember","");
+        if (checkbox.equals("true"))
+        {
+            startActivity(new Intent(LoginActivity.this, MainPageActivity.class));
+        }
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.login_progressbar);
         progressBar.setVisibility(View.GONE);
 
@@ -103,6 +113,26 @@ public class LoginActivity extends AppCompatActivity {
                 loadFragment(new ForgetPasswordFragment());
             }
         });
+       rememberme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+               if(compoundButton.isChecked()){
+                   SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+                   SharedPreferences.Editor editor = preferences.edit();
+                   editor.putString("remember","true");
+                   editor.apply();
+                   Toast.makeText(LoginActivity.this, "Lưu thông tin đăng nhập", Toast.LENGTH_SHORT).show();
+               }
+               else if(!compoundButton.isChecked())
+               {
+                   SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                   SharedPreferences.Editor editor = preferences.edit();
+                   editor.putString("remember","false");
+                   editor.apply();
+                   Toast.makeText(LoginActivity.this, "Không lưu thông tin đăng nhập", Toast.LENGTH_SHORT).show();
+               }
+           }
+       });
     }
 
     private void loadFragment(Fragment fmNew) {

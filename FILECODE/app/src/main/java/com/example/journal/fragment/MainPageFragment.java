@@ -1,6 +1,8 @@
 package com.example.journal.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -185,6 +187,10 @@ public class MainPageFragment extends Fragment {
                         Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_userpageFragment);
                         break;
                     case R.id.nav_Logout:
+                        SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("remember","false");
+                        editor.apply();
                         Intent i=new Intent(getActivity(),LoginActivity.class);
                         startActivity(i);
                         break;
