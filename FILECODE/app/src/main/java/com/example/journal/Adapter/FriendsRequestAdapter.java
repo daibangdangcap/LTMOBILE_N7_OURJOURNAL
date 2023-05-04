@@ -1,6 +1,7 @@
 package com.example.journal.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.example.journal.Model.FriendsList;
 import com.example.journal.Model.FriendsRequest;
 import com.example.journal.R;
 import com.example.journal.ultils.Ultils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +32,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAdapter.FriendRequestViewHolder> {
     DatabaseReference databaseReference;
@@ -36,7 +41,6 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
     FirebaseFirestore db;
     ArrayList<FriendsRequest> lsFriendRequest;
     Context context;
-    FriendRequestCallBack friendRequestCallBack;
     String userID;
     public FriendsRequestAdapter(ArrayList<FriendsRequest> lsFriendRequest) {
         this.lsFriendRequest = lsFriendRequest;
@@ -82,13 +86,74 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
         holder.tvUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle=new Bundle();
-                bundle.putString("id", item.getId());
-                bundle.putInt("state",1);
-                Navigation.findNavController(view).navigate(R.id.action_friendRequestFragment_to_strangeUserFragment,bundle);
+                if(holder.btnXacnhan.getText().toString().contentEquals("Xác nhận")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", item.getId());
+                    bundle.putInt("state", 1);
+                    Navigation.findNavController(view).navigate(R.id.action_friendRequestFragment_to_strangeUserFragment, bundle);
+                }
+                if(holder.btnXacnhan.getText().toString().contentEquals("Đã kết bạn")){
+                    Bundle bundle=new Bundle();
+                    bundle.putString("id",item.getId());
+                    bundle.putInt("state",3);
+                    Navigation.findNavController(view).navigate(R.id.action_friendRequestFragment_to_friendPageFragment,bundle);
+                }
+                if(holder.btnXacnhan.getText().toString().contentEquals("Đã hủy lời mời kết bạn")){
+                    Bundle bundle=new Bundle();
+                    bundle.putString("id",item.getId());
+                    bundle.putInt("state",0);
+                    Navigation.findNavController(view).navigate(R.id.action_friendRequestFragment_to_strangeUserFragment,bundle);
+                }
             }
         });
+        holder.btnXacnhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.btnXacnhan.getText().toString().contentEquals("Xác nhận"))
+                {
+                    holder.btnXacnhan.setText("Đã kết bạn");
+                    holder.btnHuy.setVisibility(View.INVISIBLE);
+                    db.collection("FriendRequest").document(item.getId()).collection("FriendReceive").document(userID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
+                        }
+                    });
+                    db.collection("FriendReceive").document(userID).collection("FriendRequest").document(item.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
+                    Map<String,Object> databecomeFriend=new HashMap<String ,Object>();
+                    databecomeFriend.put("id",userID);
+                    db.collection("MyID").document(item.getId()).collection("MyFriendsID").document(userID).set(databecomeFriend);
+                    databecomeFriend=new HashMap<String,Object>();
+                    databecomeFriend.put("id",item.getId());
+                    db.collection("MyID").document(userID).collection("MyFriendsID").document(item.getId()).set(databecomeFriend);
+                }
+            }
+        });
+        holder.btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.btnHuy.setVisibility(View.INVISIBLE);
+                holder.btnXacnhan.setText("Đã hủy lời mời kết bạn");
+                holder.btnXacnhan.setBackgroundColor(Color.GRAY);
+                db.collection("FriendRequest").document(item.getId()).collection("FriendReceive").document(userID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
+                db.collection("FriendReceive").document(userID).collection("FriendRequest").document(item.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -108,7 +173,5 @@ public class FriendsRequestAdapter extends RecyclerView.Adapter<FriendsRequestAd
             btnHuy=itemView.findViewById(R.id.btnDelete_FriendsRequestItems);
         }
     }
-    public interface FriendRequestCallBack{
 
-    }
 }

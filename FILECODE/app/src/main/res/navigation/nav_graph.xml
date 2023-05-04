@@ -107,8 +107,8 @@
         android:label="fragment_friend"
         tools:layout="@layout/fragment_friend" >
         <action
-            android:id="@+id/action_friendFragment_to_strangeUserFragment"
-            app:destination="@id/strangeUserFragment" />
+            android:id="@+id/action_friendFragment_to_friendPageFragment"
+            app:destination="@id/friendPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/friendRequestFragment"
@@ -118,6 +118,9 @@
         <action
             android:id="@+id/action_friendRequestFragment_to_strangeUserFragment"
             app:destination="@id/strangeUserFragment" />
+        <action
+            android:id="@+id/action_friendRequestFragment_to_friendPageFragment"
+            app:destination="@id/friendPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/strangeUserFragment"
@@ -132,10 +135,18 @@
         <action
             android:id="@+id/action_searchFragment_to_strangeUserFragment"
             app:destination="@id/strangeUserFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_friendPageFragment"
+            app:destination="@id/friendPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/postingFragment"
         android:name="com.example.journal.fragment.PostingFragment"
         android:label="fragment_posting"
         tools:layout="@layout/fragment_posting" />
+    <fragment
+        android:id="@+id/friendPageFragment"
+        android:name="com.example.journal.fragment.FriendPageFragment"
+        android:label="fragment_friend_page"
+        tools:layout="@layout/fragment_friend_page" />
 </navigation>

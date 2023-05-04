@@ -67,6 +67,23 @@ public class StrangeUserFragment extends Fragment {
         String userID = user.getUid();
         String idstranger = getArguments().getString("id");
         int state = getArguments().getInt("state");
+        if (state == 0)
+        {
+            btnConfirm.setVisibility(View.INVISIBLE);
+            btnDelete.setVisibility(View.INVISIBLE);
+            btnFriendRequest.setVisibility(View.INVISIBLE);
+        }
+        if(state==1)
+        {
+            btnFriendRequest.setVisibility(View.INVISIBLE);
+            btnAddFriend.setVisibility(View.INVISIBLE);
+        }
+        if(state==2){
+            btnConfirm.setVisibility(View.INVISIBLE);
+            btnDelete.setVisibility(View.INVISIBLE);
+            btnAddFriend.setVisibility(View.INVISIBLE);
+            btnFriendRequest.setVisibility(View.VISIBLE);
+        }
         imgAnhDaiDien = view.findViewById(R.id.imgAvatar_StrangerUserPage);
         final TextView user_fullname = (TextView) view.findViewById(R.id.tvUserName_StrangerUserPage);
         final TextView user_dob = (TextView) view.findViewById(R.id.DOBInfo_StrangerUserPage);
@@ -98,22 +115,7 @@ public class StrangeUserFragment extends Fragment {
 
             }
         });
-        if (state == 1)
-        {
-                btnFriendRequest.setVisibility(View.INVISIBLE);
-                btnAddFriend.setVisibility(View.INVISIBLE);
-         }
-        else if(state==2)
-        {
-                btnConfirm.setVisibility(View.INVISIBLE);
-                btnDelete.setVisibility(View.INVISIBLE);
-                btnAddFriend.setVisibility(View.INVISIBLE);
-        }
-        else {
-            btnConfirm.setVisibility(View.INVISIBLE);
-            btnDelete.setVisibility(View.INVISIBLE);
-            btnFriendRequest.setVisibility(View.INVISIBLE);
-        }
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,8 +129,8 @@ public class StrangeUserFragment extends Fragment {
                 datafriendRequest.put("id",userID);
                 Map<String,Object> datafriendReceive=new HashMap<String, Object>();
                 datafriendReceive.put("id",idstranger);
-                db.collection("FriendRequest").document(userID).collection("FriendReceive").document(idstranger).set(datafriendRequest);
-                db.collection("FriendReceive").document(idstranger).collection("FriendRequest").document(userID).set(datafriendReceive);
+                db.collection("FriendRequest").document(userID).collection("FriendReceive").document(idstranger).set(datafriendReceive);
+                db.collection("FriendReceive").document(idstranger).collection("FriendRequest").document(userID).set(datafriendRequest);
                 btnAddFriend.setText("Đã gửi lời mời");
                 btnAddFriend.setBackgroundColor(Color.GRAY);
             }
@@ -168,6 +170,24 @@ public class StrangeUserFragment extends Fragment {
                 btnDelete.setVisibility(View.INVISIBLE);
                 btnConfirm.setVisibility(View.INVISIBLE);
                 btnAddFriend.setVisibility(View.VISIBLE);
+                db.collection("FriendRequest").document(idstranger).collection("FriendReceive").document(userID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
+                db.collection("FriendReceive").document(userID).collection("FriendRequest").document(idstranger).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
+            }
+        });
+        btnFriendRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnFriendRequest.setText("Đã hủy lời mời");
                 db.collection("FriendRequest").document(idstranger).collection("FriendReceive").document(userID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

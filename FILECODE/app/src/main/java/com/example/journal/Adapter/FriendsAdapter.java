@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsViewHolder> {
+    Bundle bundle;
     DatabaseReference databaseReference;
     FirebaseUser user;
     FirebaseFirestore db;
@@ -51,7 +52,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
         FriendsAdapter.FriendsViewHolder viewHolder=new FriendsAdapter.FriendsViewHolder(view);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID=user.getUid();
-
+        bundle=new Bundle();
         db = FirebaseFirestore.getInstance();
         return viewHolder;
     }
@@ -81,7 +82,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendsV
         holder.tvUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                bundle.putString("id", item.getId());
+                Navigation.findNavController(view).navigate(R.id.action_friendFragment_to_friendPageFragment,bundle);
+                bundle.clear();
             }
         });
 
