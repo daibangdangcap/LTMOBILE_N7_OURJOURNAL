@@ -40,6 +40,7 @@
                 android:src="@drawable/white_arrow_back"
                 app:layout_constraintLeft_toLeftOf="@id/anhbia"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/anhdaidien"
                 android:layout_width="200dp"
@@ -177,6 +178,7 @@
                 app:layout_constraintTop_toBottomOf="@id/thongtincanhan" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvUserPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"

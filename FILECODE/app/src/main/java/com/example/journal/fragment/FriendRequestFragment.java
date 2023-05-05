@@ -74,16 +74,6 @@ public class FriendRequestFragment extends Fragment {
         getListRequestFromDatabase(userID);
         return view;
     }
-    /*void LoadData(){
-        lsFriendRequest=new ArrayList<>();
-        lsFriendRequest.add(new FriendsRequest("lily.png","lily"));
-        lsFriendRequest.add(new FriendsRequest("haewon.png","haewon"));
-        lsFriendRequest.add(new FriendsRequest("jinni.png","jinni"));
-        lsFriendRequest.add(new FriendsRequest("bae.png","bae"));
-        lsFriendRequest.add(new FriendsRequest("jiwoo.png","jiwoo"));
-        lsFriendRequest.add(new FriendsRequest("sullyoon.png","sullyoon"));
-        lsFriendRequest.add(new FriendsRequest("kyujin.png","kyujin"));
-    }*/
     private void getListRequestFromDatabase(String userID)
     {
             db.collection("FriendReceive").document(userID).collection("FriendRequest").get()

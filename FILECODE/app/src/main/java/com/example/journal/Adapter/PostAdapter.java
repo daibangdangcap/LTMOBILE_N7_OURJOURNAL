@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.example.journal.ultils.Ultils;
@@ -48,6 +49,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         holder.tvUserName.setText(item.getUserName());
         holder.tvCaption.setText(item.getCaption());
         Picasso.get().load(item.getImage()).into(holder.PostImage);
+        //Glide.with(Context).load(item).ge
+        //
+        String uid = lsPost.get(position).getUserId();
+        String username = lsPost.get(position).getUserName();
     }
 
     @Override

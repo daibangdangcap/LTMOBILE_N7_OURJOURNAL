@@ -24,6 +24,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -38,8 +40,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.journal.Adapter.PostAdapter;
 import com.example.journal.HelperClass;
 import com.example.journal.MainPageActivity;
+import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,6 +66,7 @@ import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.SimpleFormatter;
 
 
@@ -70,6 +75,7 @@ public class UserpageFragment extends Fragment {
     ActivityResultLauncher<String> launcher;
     FirebaseDatabase database;
     FirebaseStorage storage;
+    ArrayList<Uri> arrayListPickedImg = new ArrayList<Uri>();
     StorageReference storageReference;
     Button btnChangeInfo;
     ImageView btnBack;
@@ -81,6 +87,10 @@ public class UserpageFragment extends Fragment {
     private DatabaseReference reference;
     private String userID;
     private String imageAva;
+    ArrayList<Post> lsPost;
+    RecyclerView rvUserFragment;
+    PostAdapter postAdapter;
+
     String fullname;
     File file;
     @Override
@@ -99,7 +109,7 @@ public class UserpageFragment extends Fragment {
         final TextView user_dob = (TextView) view.findViewById(R.id.sinhnhatinfo_trangcanhan);
         final TextView user_phone = (TextView) view.findViewById(R.id.sdtinfo_trangcanhan);
         final TextView user_gender = (TextView) view.findViewById(R.id.gioitinhinfo_trangcanhan);
-
+        //RECYCLE VIEW
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -127,7 +137,6 @@ public class UserpageFragment extends Fragment {
 
             }
         });
-
         database=FirebaseDatabase.getInstance();
         storage=FirebaseStorage.getInstance();
         launcher=registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
@@ -189,7 +198,17 @@ public class UserpageFragment extends Fragment {
                 fmTran.commit();
             }
         });
+        //RECYCLE VIEW
+        rvUserFragment = view.findViewById(R.id.rvUserPage);
+        lsPost=new ArrayList<>();
+        postAdapter=new PostAdapter(lsPost);
+        LoadData();
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        rvUserFragment.setAdapter(postAdapter);
+        rvUserFragment.setLayoutManager(linearLayoutManager);
+
         return view;
+
     }
     //hàm save ảnh vào database
 
@@ -223,5 +242,26 @@ public class UserpageFragment extends Fragment {
         { imgXemAnhDD.setImageDrawable(drawable);//dùng để gán ảnh từ imageview này sang imageview khác }
             dialog.show();
         }
+    }
+
+    private void LoadData()
+    {
+        reference=FirebaseDatabase.getInstance().getReference("Posts").child(userID);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    Post post=dataSnapshot.getValue(Post.class);
+                    lsPost.add(post);
+                }
+                postAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }
