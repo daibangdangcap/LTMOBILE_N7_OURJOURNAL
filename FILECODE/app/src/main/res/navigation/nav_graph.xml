@@ -95,6 +95,9 @@
         <action
             android:id="@+id/action_mainPageFragment_to_postingFragment"
             app:destination="@id/postingFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_self"
+            app:destination="@id/mainPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/userpageFragment"

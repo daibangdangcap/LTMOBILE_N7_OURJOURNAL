@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.example.journal.ultils.Ultils;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -22,7 +26,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
     public PostAdapter(ArrayList<Post> lsPost) {
         this.lsPost = lsPost;
     }
-
+    DatabaseReference databaseReference;
+    FirebaseUser user;
+    FirebaseFirestore db;
     ArrayList<Post> lsPost;
     Context context;
     PostCallBack postCallBack;
@@ -39,10 +45,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.PostListViewHolder holder, int position) {
         Post item=lsPost.get(position);
-        holder.imgAvatar.setImageBitmap(Ultils.convertToBitmapFromAssets(context,item.getAvatar()));
-        holder.tvUserName.setText(item.getUsername());
+        holder.tvUserName.setText(item.getUserName());
         holder.tvCaption.setText(item.getCaption());
-        holder.PostImage.setImageBitmap(Ultils.convertToBitmapFromAssets(context,item.getImage()));
+        Picasso.get().load(item.getImage()).into(holder.PostImage);
     }
 
     @Override

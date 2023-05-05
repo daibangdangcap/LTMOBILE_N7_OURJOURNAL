@@ -7,15 +7,15 @@
     tools:context=".fragment.PostingFragment">
 
     <EditText
-        android:id="@+id/Caption_UpPost"
+        android:id="@+id/etCaption_UpPost"
         android:layout_width="match_parent"
-        android:layout_height="98.5dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:textAlignment="textStart"
         android:paddingLeft="20dp"
-        android:hint="Đôi lời về bài viết"
+        android:hint="Mô tả bài viết của bạn..."
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnBack_UpPost"
         />
@@ -23,12 +23,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Caption_UpPost"
+        app:layout_constraintTop_toBottomOf="@id/etCaption_UpPost"
         android:id="@+id/rvListAnh_DangBai"
         />
     <Button
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvListAnh_DangBai"
         android:textAllCaps="false"
@@ -44,7 +44,7 @@
         />
     <Button
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/AddImages_UpPost"
         android:textAllCaps="false"
@@ -60,7 +60,7 @@
         />
     <Button
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/AddLocation_UpPost"
         android:textAllCaps="false"
@@ -76,7 +76,7 @@
         />
     <Button
         android:id="@+id/btnUpPost_UpPost"
-        android:layout_width="221dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:textAllCaps="false"
@@ -92,7 +92,7 @@
 
     <ImageView
         android:id="@+id/btnBack_UpPost"
-        android:layout_width="33dp"
+        android:layout_width="25dp"
         android:layout_height="31dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="20dp"
@@ -101,5 +101,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <ProgressBar
+        android:id="@+id/pbPostingProg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

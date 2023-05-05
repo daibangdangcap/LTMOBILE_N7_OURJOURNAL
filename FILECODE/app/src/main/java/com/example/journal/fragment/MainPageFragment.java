@@ -3,6 +3,7 @@ package com.example.journal.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -24,9 +25,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+
 import com.bumptech.glide.Glide;
 import com.example.journal.Adapter.PostAdapter;
 import com.example.journal.HelperClass;
@@ -74,8 +73,9 @@ public class MainPageFragment extends Fragment {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
+    FirebaseDatabase database;
     View view;
-
+    PostAdapter postAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +86,7 @@ public class MainPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_main_page, container, false);
+        database=FirebaseDatabase.getInstance();
         toolbar=view.findViewById(R.id.toolbar);
         imgAvatarUser_toolbar = view.findViewById(R.id.imgUser);
         drawerLayout=view.findViewById(R.id.trangchu);
@@ -101,9 +102,11 @@ public class MainPageFragment extends Fragment {
         final TextView user_name = (TextView) view.findViewById(R.id.tvUserName_drawermenu);
         initMenu();
         ClickButtonDrawerMenu();
+        updateNavHeader();
+        lsPost=new ArrayList<>();
         rvlPost=view.findViewById(R.id.rvPost);
+        postAdapter=new PostAdapter(lsPost);
         LoadData();
-        PostAdapter postAdapter=new PostAdapter(lsPost);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         rvlPost.setAdapter(postAdapter);
         rvlPost.setLayoutManager(linearLayoutManager);
@@ -111,7 +114,7 @@ public class MainPageFragment extends Fragment {
         //JOURNAL
         String text = "<font color =#000000>J</font><font color =#71C2CA>o</font><font color=#A5CDA7>u</font><font color=#E8DB7B>r</font><font color=#000000>nal</font>";
         tvOurJournal.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
-        updateNavHeader();
+
         LayoutInflater layoutInflater=LayoutInflater.from(getContext());
         tv_count_friend=(TextView) layoutInflater.inflate(R.layout.counter_friend,null);
         navigationView.getMenu().findItem(R.id.nav_FriendsRequests).setActionView(tv_count_friend);
@@ -152,7 +155,7 @@ public class MainPageFragment extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.mnHome:
-                        //Navigation.findNavController(view).navigate(R.id.);
+                        Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_self);
                         break;
                     case R.id.mnAdd:
                         Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_postingFragment);
@@ -171,7 +174,7 @@ public class MainPageFragment extends Fragment {
         topBar.setVisibility(View.INVISIBLE);
         rvlPost.setVisibility(View.INVISIBLE);
     }
-    void LoadData()
+    /*void LoadData()
     {
         lsPost=new ArrayList<>();
         lsPost.add(new Post("lily.png","lily","hi, im lily","lily.png"));
@@ -181,7 +184,7 @@ public class MainPageFragment extends Fragment {
         lsPost.add(new Post("kyujin.png","kyujin","hi, im kyujin","kyujin.png"));
         lsPost.add(new Post("sullyoon.png","sullyoon","hi, im sullyoon","sullyoon.png"));
         lsPost.add(new Post("jiwoo.png","jiwoo","hi, im jiwoo","jiwoo.png"));
-    }
+    */
     void ClickButtonDrawerMenu()
     {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -260,11 +263,31 @@ public class MainPageFragment extends Fragment {
                             }
                             else {
                                 tv_count_friend.setText("");
-                                tv_count_friend.setBackground(null);
+                                
                             }
                         }
                     }
                 });
+    }
+    private void LoadData()
+    {
+        reference=database.getReference("Posts").child(userID);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    Post post=dataSnapshot.getValue(Post.class);
+                    lsPost.add(post);
+                }
+                postAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
 }
