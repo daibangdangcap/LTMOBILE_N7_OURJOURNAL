@@ -1,13 +1,17 @@
 package com.example.journal.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +34,7 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHolder> {
     public PostAdapter(ArrayList<Post> lsPost) {
@@ -80,7 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         TextView tvUserName;
         TextView tvCaption;
         ImageView PostImage;
-        ImageView imgUserAvatar;
+        ImageView imgUserAvatar, ivMore;
 
         public PostListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,10 +95,57 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
             tvUserName=itemView.findViewById(R.id.tvUsername);
             PostImage=itemView.findViewById(R.id.ivPostImage);
             imgUserAvatar = itemView.findViewById(R.id.imageAvatar);
+            ivMore = itemView.findViewById(R.id.ivMore_Post);
         }
     }
-    public interface PostCallBack
-    {
+    public interface PostCallBack {}
 
+    private void editPost(String postId) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("Edit post");
+
+        EditText editText = new EditText(context);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        editText.setLayoutParams(lp);
+        dialog.setView(editText);
+
+        getText(postId, editText);
+
+        dialog.setPositiveButton("Chỉnh sửa",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("caption", editText.getText().toString());
+                        FirebaseDatabase.getInstance().getReference("Posts")
+                                .child(postId).updateChildren(hashMap);
+                    }
+                });
+                dialog.setNegativeButton("Thoát",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+        dialog.show();
+    }
+
+    private void getText(String postId, EditText editText){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                editText.setText(snapshot.getValue(Post.class).getCaption());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
