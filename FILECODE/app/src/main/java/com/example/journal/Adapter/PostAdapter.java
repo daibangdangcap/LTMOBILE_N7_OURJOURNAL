@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.example.journal.ultils.Ultils;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +33,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 import com.google.rpc.Help;
 import com.squareup.picasso.Picasso;
@@ -40,6 +45,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHolder> {
     public PostAdapter(ArrayList<Post> lsPost) {
@@ -48,6 +54,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
     FirebaseUser user;
     ArrayList<Post> lsPost;
     Context context;
+    DatabaseReference databaseReference;
+    FirebaseFirestore db;
+    private DatabaseReference reference;
+    private String userID;
+    String fullname;
+    String image;
 
     @NonNull
     @Override
@@ -55,7 +67,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         context=parent.getContext();
         LayoutInflater inflater=LayoutInflater.from(context);
         View view=inflater.inflate(R.layout.layout_post_item,parent,false);
+        db=FirebaseFirestore.getInstance();
         PostListViewHolder postListViewHolder=new PostListViewHolder(view);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID  = user.getUid();
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HelperClass userProfile = snapshot.getValue(HelperClass.class);
+                if (userProfile != null)
+                {
+                    fullname=userProfile.getFullname();
+                    image=userProfile.getImage();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return postListViewHolder;
     }
 
@@ -79,17 +111,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
 
             }
         });
+        if (!item.getUserId().equals(user.getUid())) {
+            holder.ivMore.setVisibility(View.GONE);
+        }
         holder.ivMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, view);
-                Toast.makeText(context, "Đã xóa", Toast.LENGTH_SHORT).show();
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.mnEdit:
-                                editPost(item.getPostKey());
+                                editPost(item.getPostKey(),view);
                                 return true;
                             case R.id.mnDelete:
                                 FirebaseDatabase.getInstance().getReference("Posts")
@@ -116,6 +150,94 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                 popupMenu.show();
             }
         });
+        holder.tvTotal_Like.setText(Integer.toString(item.getSum_Like()));
+
+        db.collection("Like").document(item.getUserId()).collection(item.getPostKey())
+                .whereEqualTo("idUserLike",userID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.getResult().isEmpty())
+                        {
+                            holder.imgLike.setImageResource(R.drawable.like);
+                        }
+                        else
+                        {
+                            holder.imgLike.setImageResource(R.drawable.baseline_favorite_24);
+                        }
+                    }
+                });
+        holder.imgLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map<String,Object> map=new HashMap<>();
+                map.put("idPost",item.getPostKey());
+                map.put("idUserLike",userID);
+                map.put("fullname",fullname);
+                map.put("Avatar",image);
+                db.collection("Like").document(item.getUserId()).collection(item.getPostKey())
+                        .whereEqualTo("idUserLike",userID)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.getResult().isEmpty())
+                                {
+
+                                    db.collection("Like").document(item.getUserId()).collection(item.getPostKey()).document(userID).set(map);
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+                                    reference.child(item.getUserId()).child(item.getPostKey()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            Post post=snapshot.getValue(Post.class);
+                                            item.setSum_Like(post.getSum_Like());
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    int sumLike=item.getSum_Like();
+                                    sumLike++;
+                                    item.setSum_Like(sumLike);
+                                    updateSumLike(sumLike,item);
+                                    holder.imgLike.setImageResource(R.drawable.baseline_favorite_24);
+                                    lsPost.clear();
+                                }
+                                else
+                                {
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+                                    reference.child(item.getUserId()).child(item.getPostKey()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            Post post=snapshot.getValue(Post.class);
+                                            item.setSum_Like(post.getSum_Like());
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    int sumLike=item.getSum_Like();
+                                    sumLike--;
+                                    item.setSum_Like(sumLike);
+                                    updateSumLike(sumLike,item);
+                                    db.collection("Like").document(item.getUserId()).collection(item.getPostKey()).document(userID).delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                }
+                                            });
+                                    holder.imgLike.setImageResource(R.drawable.like);
+                                    lsPost.clear();
+                                }
+                            }
+                        });
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -127,6 +249,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         TextView tvCaption;
         ImageView PostImage;
         ImageView imgUserAvatar, ivMore;
+        ImageView imgLike;
+        ImageView imgComment;
+        TextView tvTotal_Like;
+        TextView tvTotal_Comment;
 
         public PostListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -137,11 +263,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
             PostImage=itemView.findViewById(R.id.ivPostImage);
             imgUserAvatar = itemView.findViewById(R.id.imageAvatar);
             ivMore = itemView.findViewById(R.id.ivMore_Post);
+            imgLike=itemView.findViewById(R.id.ivLike);
+            imgComment=itemView.findViewById(R.id.ivComment);
+            tvTotal_Like=itemView.findViewById(R.id.tvTotalLike);
+            tvTotal_Comment=itemView.findViewById(R.id.tvTotalComment);
         }
     }
     public interface PostCallBack {}
 
-    private void editPost(String postId) {
+    private void editPost(String postId,View view) {
+        FirebaseUser user1=FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId=user1.getUid();
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setTitle("Edit post");
 
@@ -152,17 +284,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         );
         editText.setLayoutParams(lp);
         dialog.setView(editText);
-
         getText(postId, editText);
 
         dialog.setPositiveButton("Chỉnh sửa",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        HashMap<String, Object> hashMap = new HashMap<>();
+                        Map<String, Object> hashMap = new HashMap<>();
                         hashMap.put("caption", editText.getText().toString());
                         FirebaseDatabase.getInstance().getReference("Posts")
-                                .child(postId).updateChildren(hashMap);
+                                .child(currentUserId).child(postId).updateChildren(hashMap);
                     }
                 });
                 dialog.setNegativeButton("Thoát",
@@ -176,7 +307,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
     }
 
     private void getText(String postId, EditText editText){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
+        FirebaseUser user1=FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId=user1.getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(currentUserId).child(postId);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -185,6 +318,43 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    /*private int sum_Like(Post item,PostListViewHolder holder,int h)
+    {h=0;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.child(item.getUserId()).child(item.getPostKey()).addValueEventListener(new ValueEventListener() {
+            public int sumLike = 0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Post post=snapshot.getValue(Post.class);
+                sumLike=post.getSum_Like();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }*/
+    private void updateSumLike(int sum_Like,Post item)
+    {
+        Map<String,Object>map=new HashMap<>();
+        map.put("caption",item.getCaption());
+        map.put("image",item.getImage());
+        map.put("location",item.getLocation());
+        map.put("postKey",item.getPostKey());
+        map.put("sum_Comment",item.getSum_Comment());
+        map.put("sum_Like",item.getSum_Like());
+        map.put("userId",item.getUserId());
+        map.put("userName",item.getUserName());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference1=database.getReference("Posts").child(item.getUserId()).child(item.getPostKey());
+        databaseReference1.updateChildren(map, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
 
             }
         });

@@ -70,8 +70,9 @@
         <ImageView
             android:id="@+id/ivPostImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_height="400dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -91,7 +92,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_toEndOf="@id/ivLike"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:text="0"/>
 
             <ImageView
                 android:id="@+id/ivComment"
@@ -108,7 +110,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_toEndOf="@id/ivComment"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:text="0"/>
 
         </RelativeLayout>
 

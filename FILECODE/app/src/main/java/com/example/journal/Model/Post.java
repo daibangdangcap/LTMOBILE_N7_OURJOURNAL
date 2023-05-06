@@ -3,6 +3,25 @@ package com.example.journal.Model;
 import java.util.ArrayList;
 
 public class Post {
+    int sum_Like;
+    int sum_Comment;
+
+    public int getSum_Like() {
+        return sum_Like;
+    }
+
+    public void setSum_Like(int sum_Like) {
+        this.sum_Like = sum_Like;
+    }
+
+    public int getSum_Comment() {
+        return sum_Comment;
+    }
+
+    public void setSum_Comment(int sum_Comment) {
+        this.sum_Comment = sum_Comment;
+    }
+
     private String postKey;
     private String Caption;
     //private ArrayList<String> Photos;
@@ -71,13 +90,15 @@ public class Post {
         this.timeStamp = timeStamp;
     }
 
-    public Post(String caption, String Image, String userId, String userName, String location) {
+    public Post(String caption, String Image, String userId, String userName, String location,int sum_Like,int sum_Comment) {
 
         this.Caption = caption;
         this.Image = Image;
         this.userId = userId;
         this.userName = userName;
         this.location = "";
+        this.sum_Like=sum_Like;
+        this.sum_Comment=sum_Comment;
     }
 
     public Post() {

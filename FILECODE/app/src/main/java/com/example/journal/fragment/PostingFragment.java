@@ -123,7 +123,7 @@ public class PostingFragment extends Fragment {
                                 public void onSuccess(Uri uri) {
                                     String imageDownloadLink = uri.toString();
                                     Post post = new Post(etCaption_UpPost.getText().toString(), imageDownloadLink,
-                                            currentUser.getUid(), fullname,"");
+                                            currentUser.getUid(), fullname,"",0,0);
                                     addPost(post);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
