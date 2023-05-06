@@ -3,12 +3,15 @@ package com.example.journal.Adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,6 +22,8 @@ import com.example.journal.HelperClass;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.example.journal.ultils.Ultils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +48,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
     FirebaseUser user;
     ArrayList<Post> lsPost;
     Context context;
-    DatabaseReference databaseReference;
 
     @NonNull
     @Override
@@ -73,6 +77,43 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        holder.ivMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(context, view);
+                Toast.makeText(context, "Đã xóa", Toast.LENGTH_SHORT).show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.mnEdit:
+                                editPost(item.getPostKey());
+                                return true;
+                            case R.id.mnDelete:
+                                FirebaseDatabase.getInstance().getReference("Posts")
+                                        .child(item.getUserId()).child(item.getPostKey()).removeValue()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(context, "Đã xóa", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popupMenu.inflate(R.menu.post_menu);
+                if (!item.getUserId().equals(user.getUid())) {
+                    popupMenu.getMenu().findItem(R.id.mnEdit).setVisible(false);
+                    popupMenu.getMenu().findItem(R.id.mnDelete).setVisible(false);
+                }
+                popupMenu.show();
             }
         });
     }
