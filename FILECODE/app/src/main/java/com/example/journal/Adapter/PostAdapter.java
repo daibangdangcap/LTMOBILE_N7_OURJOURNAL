@@ -11,11 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.journal.HelperClass;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.example.journal.ultils.Ultils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -27,12 +33,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
     public PostAdapter(ArrayList<Post> lsPost) {
         this.lsPost = lsPost;
     }
-    DatabaseReference databaseReference;
     FirebaseUser user;
-    FirebaseFirestore db;
     ArrayList<Post> lsPost;
     Context context;
-    PostCallBack postCallBack;
+    DatabaseReference databaseReference;
+
     @NonNull
     @Override
     public PostAdapter.PostListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,12 +54,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         holder.tvUserName.setText(item.getUserName());
         holder.tvCaption.setText(item.getCaption());
         Picasso.get().load(item.getImage()).into(holder.PostImage);
-        //Glide.with(Context).load(item).ge
-        //
-        String uid = lsPost.get(position).getUserId();
-        String username = lsPost.get(position).getUserName();
-    }
 
+    }
     @Override
     public int getItemCount() {
         return lsPost.size();
@@ -64,12 +65,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         TextView tvUserName;
         TextView tvCaption;
         ImageView PostImage;
+        ImageView imgUserAvatar;
+
         public PostListViewHolder(@NonNull View itemView) {
             super(itemView);
+            user = FirebaseAuth.getInstance().getCurrentUser();
             imgAvatar=itemView.findViewById(R.id.imageAvatar);
             tvCaption=itemView.findViewById(R.id.tvCaption);
             tvUserName=itemView.findViewById(R.id.tvUsername);
             PostImage=itemView.findViewById(R.id.ivPostImage);
+            imgUserAvatar = itemView.findViewById(R.id.imageAvatar);
         }
     }
     public interface PostCallBack

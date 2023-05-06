@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -31,6 +32,7 @@ import com.example.journal.Adapter.PostAdapter;
 import com.example.journal.HelperClass;
 import com.example.journal.LoginActivity;
 import com.example.journal.MapActivity;
+import com.example.journal.Model.FriendsList;
 import com.example.journal.Model.FriendsRequest;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
@@ -74,6 +76,7 @@ public class MainPageFragment extends Fragment {
     private DatabaseReference reference;
     private String userID;
     FirebaseDatabase database;
+    FirebaseFirestore db;
     View view;
     PostAdapter postAdapter;
     @Override
@@ -98,6 +101,7 @@ public class MainPageFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
+        db = FirebaseFirestore.getInstance();
         //  INFORMATION
         final TextView user_name = (TextView) view.findViewById(R.id.tvUserName_drawermenu);
         initMenu();
@@ -260,13 +264,18 @@ public class MainPageFragment extends Fragment {
     }
     private void LoadData()
     {
-        reference=database.getReference("Posts").child(userID);
+        //DatabaseReference ref = database.getReference("Posts");
+      //  DatabaseReference ref1 = ref.getRef();
+        reference=database.getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Post post=dataSnapshot.getValue(Post.class);
-                    lsPost.add(post);
+                for(DataSnapshot userPosts:snapshot.getChildren()){
+
+                    for(DataSnapshot posts : userPosts.getChildren()){
+                        Post p = posts.getValue(Post.class);
+                        lsPost.add(p);
+                    }
                 }
                 postAdapter.notifyDataSetChanged();
             }
@@ -276,6 +285,10 @@ public class MainPageFragment extends Fragment {
 
             }
         });
+    }
+    private void ListFriendID(String userID)
+    {
+        db.collection("MyID").document(userID).collection("MyFriendsID").get();
 
     }
 

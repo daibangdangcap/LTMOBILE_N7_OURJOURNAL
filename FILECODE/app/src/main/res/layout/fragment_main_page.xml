@@ -16,6 +16,7 @@
         android:background="#F4F3F3">
 
         <androidx.appcompat.widget.Toolbar
+            android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -43,15 +44,15 @@
             app:layout_constraintRight_toRightOf="parent"
             android:id="@+id/imgUser"/>
 
-        <TextView
-            android:fontFamily="@font/inter"
-            android:id="@+id/tvOurJournal"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.35"
-            android:textSize="28sp"/>
+            <TextView
+                android:id="@+id/tvOurJournal"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/inter"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.35" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
         <ScrollView
