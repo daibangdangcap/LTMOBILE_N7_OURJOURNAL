@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
+import com.google.rpc.Help;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -55,6 +57,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         holder.tvCaption.setText(item.getCaption());
         Picasso.get().load(item.getImage()).into(holder.PostImage);
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(item.getUserId());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HelperClass helperClass = snapshot.getValue(HelperClass.class);
+                Glide.with(context).load(helperClass.getImage()).into(holder.imgUserAvatar);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     @Override
     public int getItemCount() {
