@@ -1,12 +1,19 @@
 package com.example.journal.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -20,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.journal.HelperClass;
+import com.example.journal.Model.Comment;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.example.journal.ultils.Ultils;
@@ -41,6 +49,7 @@ import com.google.firebase.firestore.auth.User;
 import com.google.rpc.Help;
 import com.squareup.picasso.Picasso;
 
+import org.checkerframework.checker.units.qual.C;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -238,6 +247,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                         });
             }
         });
+        holder.imgComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenDialogComment(view, Gravity.CENTER,userID,fullname,image,item);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -267,6 +282,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
             imgComment=itemView.findViewById(R.id.ivComment);
             tvTotal_Like=itemView.findViewById(R.id.tvTotalLike);
             tvTotal_Comment=itemView.findViewById(R.id.tvTotalComment);
+
         }
     }
     public interface PostCallBack {}
@@ -358,5 +374,73 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
 
             }
         });
+    }
+    private void OpenDialogComment(View view,int gravity,String userID,String fullname,String image,Post item)
+    {
+        final Dialog dialog=new Dialog(view.getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_comment_dialog);
+        Window window=dialog.getWindow();
+        if(window==null)
+        {
+            return;
+        }
+        else {
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            WindowManager.LayoutParams windowAttributes=window.getAttributes();
+            windowAttributes.gravity=gravity;
+            window.setAttributes(windowAttributes);
+            if(Gravity.BOTTOM!=gravity)
+            {
+                dialog.setCancelable(true);
+                dialog.dismiss();
+            }
+            else dialog.setCancelable(false);
+            RecyclerView rvListCmt;
+            EditText edInputCmt;
+            ImageButton btnSendCmt;
+            rvListCmt=dialog.findViewById(R.id.rvListComment);
+            edInputCmt=dialog.findViewById(R.id.edInputComment);
+            btnSendCmt=dialog.findViewById(R.id.btnSendComment);
+            ArrayList<Comment> lsComment=new ArrayList<>();
+            CommentAdapter commentAdapter=new CommentAdapter(lsComment);
+            btnSendCmt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(edInputCmt.getText().toString()==null) return;
+                    else
+                    {
+                        String id=db.collection("Comment").document().getId();
+                        Map<String,Object> map=new HashMap<>();
+                        map.put("CommentID",id);
+                        map.put("idUsername",userID);
+                        map.put("username",fullname);
+                        map.put("image",image);
+                        map.put("commentContent",edInputCmt.getText().toString());
+                        db.collection("Comment").document(item.getUserId()).collection(item.getPostKey()).document(id).set(map);
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+                        reference.child(item.getUserId()).child(item.getPostKey()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Post post=snapshot.getValue(Post.class);
+                                item.setSum_Comment(post.getSum_Comment());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+            });
+
+        }
+        dialog.show();
+    }
+    private void LoadData()
+    {
+
     }
 }
