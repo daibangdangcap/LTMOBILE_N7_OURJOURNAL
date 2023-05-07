@@ -45,7 +45,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentL
             holder.tvComment.setText(item.getCommentContent());
             holder.tvUsername.setText(item.getFullname());
             Glide.with(context).load(item.getImage()).into(holder.imgAvatarComment);
-
     }
 
     @Override

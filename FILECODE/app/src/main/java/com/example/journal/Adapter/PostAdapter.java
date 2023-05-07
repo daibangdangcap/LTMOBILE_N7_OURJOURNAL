@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -69,7 +70,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
     private String userID;
     String fullname;
     String image;
-
+    ArrayList<Comment>lsComment;
     @NonNull
     @Override
     public PostAdapter.PostListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -403,15 +404,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
             rvListCmt=dialog.findViewById(R.id.rvListComment);
             edInputCmt=dialog.findViewById(R.id.edInputComment);
             btnSendCmt=dialog.findViewById(R.id.btnSendComment);
-            ArrayList<Comment> lsComment=new ArrayList<>();
+            String id=db.collection("Comment").document().getId();
+            lsComment=new ArrayList<>();
             CommentAdapter commentAdapter=new CommentAdapter(lsComment);
+            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
+            rvListCmt.setAdapter(commentAdapter);
+            rvListCmt.setLayoutManager(linearLayoutManager);
+            getListCommentFromDatabase(item,commentAdapter);
             btnSendCmt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(edInputCmt.getText().toString()==null) return;
                     else
                     {
-                        String id=db.collection("Comment").document().getId();
+
                         Map<String,Object> map=new HashMap<>();
                         map.put("CommentID",id);
                         map.put("idUsername",userID);
@@ -419,6 +425,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                         map.put("image",image);
                         map.put("commentContent",edInputCmt.getText().toString());
                         db.collection("Comment").document(item.getUserId()).collection(item.getPostKey()).document(id).set(map);
+                        Comment comment=new Comment(id,userID,fullname,image,edInputCmt.getText().toString());
+                        lsComment.add(comment);
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
                         reference.child(item.getUserId()).child(item.getPostKey()).addValueEventListener(new ValueEventListener() {
                             @Override
@@ -443,9 +451,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         }
         dialog.show();
     }
-    private void LoadData()
+    private void getListCommentFromDatabase(Post item,CommentAdapter commentAdapter)
     {
-
+        db.collection("Comment").document(item.getUserId()).collection(item.getPostKey()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        lsComment.clear();
+                        for(DocumentSnapshot snapshot: task.getResult())
+                        {
+                            Comment comment=new Comment(snapshot.getString("CommentID"),snapshot.getString("idUsername"),snapshot.getString("username"),snapshot.getString("image"),snapshot.getString("commentContent"));
+                            lsComment.add(comment);
+                            int count=0;
+                            count=task.getResult().size();
+                            count++;
+                        }
+                        commentAdapter.notifyDataSetChanged();
+                    }
+                });
     }
     private void UpdateSumComment(int sumCmt)
     {
