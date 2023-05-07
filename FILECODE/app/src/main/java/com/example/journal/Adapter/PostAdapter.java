@@ -432,6 +432,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
 
                             }
                         });
+                        int sum_comment=item.getSum_Comment();
+                        sum_comment++;
+                        item.setSum_Comment(sum_comment);
+                        UpdateSumComment(sum_comment);
                     }
                 }
             });
@@ -440,6 +444,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
         dialog.show();
     }
     private void LoadData()
+    {
+
+    }
+    private void UpdateSumComment(int sumCmt)
     {
 
     }
