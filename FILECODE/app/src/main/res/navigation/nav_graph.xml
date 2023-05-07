@@ -103,7 +103,11 @@
         android:id="@+id/userpageFragment"
         android:name="com.example.journal.fragment.UserpageFragment"
         android:label="fragment_userpage"
-        tools:layout="@layout/fragment_userpage" />
+        tools:layout="@layout/fragment_userpage" >
+        <action
+            android:id="@+id/action_userpageFragment_to_setting_InfoFragment"
+            app:destination="@id/setting_InfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/friendFragment"
         android:name="com.example.journal.fragment.FriendFragment"

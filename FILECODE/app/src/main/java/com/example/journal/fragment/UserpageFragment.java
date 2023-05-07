@@ -47,6 +47,7 @@ import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -90,7 +91,7 @@ public class UserpageFragment extends Fragment {
     ArrayList<Post> lsPost;
     RecyclerView rvUserFragment;
     PostAdapter postAdapter;
-
+    Button btnChinhsuathongtin_userpage;
     String fullname;
     File file;
     @Override
@@ -100,6 +101,7 @@ public class UserpageFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_userpage, container, false);
         btnselectAnhDaiDien=view.findViewById(R.id.btnDoiAnh);
         imgAnhDaiDien=view.findViewById(R.id.anhdaidien);
+        btnChinhsuathongtin_userpage = view.findViewById(R.id.btnChinhsuathongtincanhan_trangcanhan);
         //firebase
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -110,6 +112,12 @@ public class UserpageFragment extends Fragment {
         final TextView user_phone = (TextView) view.findViewById(R.id.sdtinfo_trangcanhan);
         final TextView user_gender = (TextView) view.findViewById(R.id.gioitinhinfo_trangcanhan);
         //RECYCLE VIEW
+        /*btnChinhsuathongtin_userpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_userpageFragment_to_setting_InfoFragment);
+            }
+        });*/
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -137,6 +145,7 @@ public class UserpageFragment extends Fragment {
 
             }
         });
+
         database=FirebaseDatabase.getInstance();
         storage=FirebaseStorage.getInstance();
         launcher=registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {

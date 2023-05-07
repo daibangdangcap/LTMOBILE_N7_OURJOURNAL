@@ -36,6 +36,7 @@ import com.example.journal.Model.FriendsList;
 import com.example.journal.Model.FriendsRequest;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
+import com.example.journal.ultils.TranslateAnimation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -118,7 +119,7 @@ public class MainPageFragment extends Fragment {
         //JOURNAL
         String text = "<font color =#000000>J</font><font color =#71C2CA>o</font><font color=#A5CDA7>u</font><font color=#E8DB7B>r</font><font color=#000000>nal</font>";
         tvOurJournal.setText(Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY));
-
+        rvlPost.setOnTouchListener(new TranslateAnimation(getActivity(),  menubottom));
         LayoutInflater layoutInflater=LayoutInflater.from(getContext());
         tv_count_friend=(TextView) layoutInflater.inflate(R.layout.counter_friend,null);
         navigationView.getMenu().findItem(R.id.nav_FriendsRequests).setActionView(tv_count_friend);
