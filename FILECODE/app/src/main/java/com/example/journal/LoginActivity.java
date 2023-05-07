@@ -81,21 +81,27 @@ public class LoginActivity extends AppCompatActivity {
                       }).addOnFailureListener(new OnFailureListener() {
                           @Override
                           public void onFailure(@NonNull Exception e) {
+                              progressBar.setVisibility(View.GONE);
                               Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
                           }
                       });
                   } else {
+                      progressBar.setVisibility(View.GONE);
                       etPasslogin.setError("Vui lòng nhập mật khẩu!");
                       etPasslogin.requestFocus();
                   }
               }
                     else if (email.isEmpty())
                 {
+                    progressBar.setVisibility(View.GONE);
+
                     etEmailLogin.setError("Vui lòng nhập tên đăng nhập!");
                     etEmailLogin.requestFocus();
                 }
                     else
                 {
+                    progressBar.setVisibility(View.GONE);
+
                     etEmailLogin.setError("Vui lòng nhập email!");
                 }
             }
