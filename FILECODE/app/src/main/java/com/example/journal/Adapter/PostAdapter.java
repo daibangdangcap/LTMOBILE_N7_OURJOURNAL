@@ -254,6 +254,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                 OpenDialogComment(view, Gravity.CENTER,userID,fullname,image,item);
             }
         });
+        holder.tvTotal_Comment.setText(Integer.toString(item.getSum_Comment()));
     }
     @Override
     public int getItemCount() {
@@ -427,6 +428,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                         db.collection("Comment").document(item.getUserId()).collection(item.getPostKey()).document(id).set(map);
                         Comment comment=new Comment(id,userID,fullname,image,edInputCmt.getText().toString());
                         lsComment.add(comment);
+                        commentAdapter.notifyDataSetChanged();
+                        edInputCmt.setText("");
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
                         reference.child(item.getUserId()).child(item.getPostKey()).addValueEventListener(new ValueEventListener() {
                             @Override
@@ -443,7 +446,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                         int sum_comment=item.getSum_Comment();
                         sum_comment++;
                         item.setSum_Comment(sum_comment);
-                        UpdateSumComment(sum_comment);
+                        UpdateSumComment(sum_comment,item);
                     }
                 }
             });
@@ -470,8 +473,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                     }
                 });
     }
-    private void UpdateSumComment(int sumCmt)
+    private void UpdateSumComment(int sumCmt,Post item)
     {
+        Map<String,Object>map=new HashMap<>();
+        map.put("caption",item.getCaption());
+        map.put("image",item.getImage());
+        map.put("location",item.getLocation());
+        map.put("postKey",item.getPostKey());
+        map.put("sum_Comment",item.getSum_Comment());
+        map.put("sum_Like",item.getSum_Like());
+        map.put("userId",item.getUserId());
+        map.put("userName",item.getUserName());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference1=database.getReference("Posts").child(item.getUserId()).child(item.getPostKey());
+        databaseReference1.updateChildren(map, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
 
+            }
+        });
     }
 }
