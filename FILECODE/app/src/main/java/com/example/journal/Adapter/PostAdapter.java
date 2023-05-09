@@ -415,7 +415,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
             btnSendCmt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(edInputCmt.getText().toString()==null) return;
+                    if(edInputCmt.getText().toString()==null || edInputCmt.getText().toString().equals("")) {
+                        Toast.makeText(context, "Vui lòng nhập bình luận!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     else
                     {
 

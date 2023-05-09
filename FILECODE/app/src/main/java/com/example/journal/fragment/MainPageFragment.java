@@ -275,7 +275,6 @@ public class MainPageFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot userPosts:snapshot.getChildren()){
-
                     for(DataSnapshot posts : userPosts.getChildren()){
                         Post p = posts.getValue(Post.class);
                         lsPost.add(p);

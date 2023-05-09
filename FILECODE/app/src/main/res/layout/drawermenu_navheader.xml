@@ -22,7 +22,7 @@
         android:id="@+id/tvUserName_drawermenu"
         app:layout_constraintTop_toBottomOf="@id/imgAvatar_drawermenu"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text=""
+        android:textColor="@color/black"
         android:textSize="25dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
