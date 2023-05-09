@@ -28,9 +28,9 @@
             app:layout_constraintLeft_toRightOf="@id/imgAvatar_FriendslistItems"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="25dp"
-            android:textColor="@color/black"
+            android:textColor="#E6393737"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
             />
         <Button
             android:id="@+id/btnFriends_FriendslistItems"
@@ -43,7 +43,7 @@
             android:paddingHorizontal="35dp"
             android:text="Bạn bè"
             android:textAllCaps="false"
-            android:textColor="@color/black"
+            android:textColor="#E6393737"
             android:textSize="20dp"
             app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"

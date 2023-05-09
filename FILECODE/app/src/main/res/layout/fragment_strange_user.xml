@@ -70,7 +70,7 @@
                 android:id="@+id/btnConfirm_StrangerUserPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="70dp"
                 android:background="#B6E2A1"
                 android:text="Xác nhận"
                 android:textAllCaps="false"
@@ -84,7 +84,7 @@
                 android:id="@+id/btnDelete_StrangerUserPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="290dp"
+                android:layout_marginRight="70dp"
                 android:background="#FF6666"
                 android:text="Hủy"
                 android:textAllCaps="false"
@@ -92,7 +92,7 @@
                 android:textSize="20dp"
                 app:backgroundTint="@null"
                 app:cornerRadius="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvUserName_StrangerUserPage" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnFriendsRequest_StrangerUserPage"

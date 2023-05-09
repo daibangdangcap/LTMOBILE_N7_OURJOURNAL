@@ -23,10 +23,10 @@
             app:layout_constraintTop_toTopOf="parent"
             />
         <TextView android:id="@+id/tvPolicy_Policy"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textColor="@color/black"
-            android:layout_marginTop="33dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chính sách và điều khoản"

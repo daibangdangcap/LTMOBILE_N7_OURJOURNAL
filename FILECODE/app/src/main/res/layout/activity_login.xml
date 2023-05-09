@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:fontFamily="@font/inter"
         android:text="Đăng Nhập"
-        android:textColor="@color/white"
+        android:textColor="#393737"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/table_register"
@@ -64,8 +64,9 @@
 
     <EditText
         android:id="@+id/etUsernameLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:layout_marginTop="64dp"
         android:background="@drawable/rectangle_9"
         android:drawableLeft="@drawable/account_circle"
