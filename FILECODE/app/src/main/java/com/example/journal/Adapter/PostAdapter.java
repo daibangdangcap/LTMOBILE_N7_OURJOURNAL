@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -137,15 +138,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostListViewHo
                                 return true;
                             case R.id.mnDelete:
                                 FirebaseDatabase.getInstance().getReference("Posts")
-                                        .child(item.getUserId()).child(item.getPostKey()).removeValue()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        .child(item.getUserId()).child(item.getPostKey()).setValue(null)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(context, "Đã xóa", Toast.LENGTH_SHORT).show();
-                                                }
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(context, "Đã xóa", Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                                Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_self);
                                 return true;
                             default:
                                 return false;

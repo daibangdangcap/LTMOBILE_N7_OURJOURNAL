@@ -6,8 +6,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,21 +22,34 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.model.ModelLoader;
+import com.example.journal.Adapter.PostAdapter;
 import com.example.journal.HelperClass;
+import com.example.journal.Model.Post;
 import com.example.journal.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class FriendPageFragment extends Fragment {
+    FirebaseDatabase database;
+    private DatabaseReference reference;
+    ArrayList<Post> lsPost;
+    RecyclerView rvlPost;
+    PostAdapter postAdapter;
     Button btnConfirmDelete;
     FirebaseFirestore db;
     ImageView btnBack;
@@ -51,6 +67,8 @@ public class FriendPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_friend_page, container, false);
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        database=FirebaseDatabase.getInstance();
         idstranger = getArguments().getString("id");
         final TextView user_fullname = (TextView) view.findViewById(R.id.tvUserName_FriendsUserPage);
         final TextView user_dob = (TextView) view.findViewById(R.id.DOBInfo_FriendsUserPage);
@@ -62,7 +80,13 @@ public class FriendPageFragment extends Fragment {
         btnDelete=view.findViewById(R.id.btnDeleteFriends_FriendsUserPage);
         btnConfirmDelete=view.findViewById(R.id.btnConfirmDelete_FriendsUserPage);
         btnConfirmDelete.setVisibility(View.INVISIBLE);
-
+        rvlPost=view.findViewById(R.id.rlPostFriend);
+        lsPost=new ArrayList<>();
+        postAdapter=new PostAdapter(lsPost);
+        LoadData();
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        rvlPost.setAdapter(postAdapter);
+        rvlPost.setLayoutManager(linearLayoutManager);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
         db = FirebaseFirestore.getInstance();
@@ -161,5 +185,40 @@ public class FriendPageFragment extends Fragment {
             }
         });
         dialog.show();
+    }
+    private void LoadData()
+    {
+        //DatabaseReference ref = database.getReference("Posts");
+        //  DatabaseReference ref1 = ref.getRef();
+        reference=database.getReference("Posts");
+        reference.child(idstranger).orderByChild("userId").equalTo(idstranger).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Post p = snapshot.getValue(Post.class);
+                lsPost.add(p);
+                postAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

@@ -200,11 +200,7 @@ public class UserpageFragment extends Fragment {
         btnChangeInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment=new Setting_InfoFragment();
-                FragmentTransaction fmTran = getActivity().getSupportFragmentManager().beginTransaction();
-                fmTran.replace(R.id.trangchinh,fragment);
-                fmTran.addToBackStack(null);
-                fmTran.commit();
+                Navigation.findNavController(view).navigate(R.id.action_userpageFragment_to_setting_InfoFragment);
             }
         });
         //RECYCLE VIEW

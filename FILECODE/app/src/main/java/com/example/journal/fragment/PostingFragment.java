@@ -104,7 +104,7 @@ public class PostingFragment extends Fragment {
         });
 
 
-
+        addImages_upPost=view.findViewById(R.id.AddImages_UpPost);
         etCaption_UpPost = view.findViewById(R.id.etCaption_UpPost);
         pbPostingProg = view.findViewById(R.id.pbPostingProg);
         pbPostingProg.setVisibility(View.GONE);
@@ -124,7 +124,7 @@ public class PostingFragment extends Fragment {
                                     String imageDownloadLink = uri.toString();
                                     Post post = new Post(etCaption_UpPost.getText().toString(), imageDownloadLink,
                                             currentUser.getUid(), fullname,"",0,0);
-                                    addPost(post);
+                                    addPost(post,view);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -143,7 +143,7 @@ public class PostingFragment extends Fragment {
         });
 
 
-        addImages_upPost=view.findViewById(R.id.AddImages_UpPost);
+
         addImages_upPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,7 +204,7 @@ public class PostingFragment extends Fragment {
         startActivityForResult(galleryIntent,REQUESCODE);
     }
 
-    private void addPost(Post post){
+    private void addPost(Post post,View view){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Posts").child(currentUser.getUid()).push();
 
@@ -214,8 +214,9 @@ public class PostingFragment extends Fragment {
         reference.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getActivity(), "Đã đăng thành công!", Toast.LENGTH_SHORT).show();
                 pbPostingProg.setVisibility(View.GONE);
+                Navigation.findNavController(view).popBackStack();
+                Toast.makeText(getActivity(), "Đã đăng thành công!", Toast.LENGTH_SHORT).show();
             }
         });
     }
