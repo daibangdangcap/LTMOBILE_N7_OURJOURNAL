@@ -29,8 +29,10 @@
         android:gravity="center"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:fontFamily="@font/inter"
         android:textStyle="bold"
         android:textSize="30dp"
+        android:textColor="#E6393737"
         android:layout_marginTop="20dp"
         />
         <TextView
@@ -39,9 +41,10 @@
             app:layout_constraintTop_toBottomOf="@+id/Policyapp_tvheader"
             android:text="@string/Policyapp"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:padding="8dp"
             android:textSize="18dp"
-            android:textStyle="bold"
-            />
+            android:textColor="#E6393737"
+            android:fontFamily="@font/inter"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView >
 </FrameLayout>

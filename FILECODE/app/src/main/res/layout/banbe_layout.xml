@@ -30,8 +30,10 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
             android:text="Tên người dùng"
-            android:textColor="@color/black"
-            android:textSize="25dp"
+            android:fontFamily="@font/inter"
+            android:textColor="#D9222020"
+            android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/imgAvatar_FriendsItems"
             app:layout_constraintTop_toTopOf="parent" />
         <com.google.android.material.button.MaterialButton

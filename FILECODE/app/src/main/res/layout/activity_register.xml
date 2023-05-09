@@ -30,8 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="95dp"
-                android:text="Đăng ký"
-                android:textColor="@color/black"
+                android:text="Đăng Ký"
+                android:textColor="#393737"
                 android:textSize="45sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/inter"/>
@@ -47,11 +47,12 @@
                <EditText
                    android:id ="@+id/etName_Register"
                    android:layout_width="match_parent"
-                   android:layout_height="47.92dp"
+                   android:layout_height="50dp"
                    android:layout_marginLeft="20dp"
                    android:layout_marginTop="30dp"
                    android:paddingLeft="20dp"
                    android:hint="Họ và tên"
+                   android:fontFamily="@font/inter"
                    android:background="@drawable/rectangle_9"
                    android:layout_marginRight="20dp"
                    />
@@ -59,7 +60,7 @@
             <EditText
                 android:id="@+id/etEmail_Registerr"
                 android:layout_width="match_parent"
-                android:layout_height="47.92dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/etName_Register"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
@@ -73,7 +74,7 @@
             <EditText
                 android:id="@+id/etPassword_register"
                 android:layout_width="match_parent"
-                android:layout_height="47.92dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/etEmail_Registerr"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
@@ -87,7 +88,7 @@
             <EditText
                 android:id="@+id/etReenterPassword_register"
                 android:layout_width="match_parent"
-                android:layout_height="47.92dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/etPassword_register"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
@@ -101,13 +102,13 @@
             <EditText
                 android:id="@+id/etDOB_register"
                 android:layout_width="match_parent"
-                android:layout_height="47.92dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/etReenterPassword_register"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/rectangle_9"
-                android:hint="Nhập ngày sinh"
+                android:hint="Ngày sinh"
                 android:inputType="date"
                 android:paddingLeft="20dp"
                 android:fontFamily="@font/inter" />
@@ -115,13 +116,13 @@
             <EditText
                 android:id="@+id/etPhonenumber_register"
                 android:layout_width="match_parent"
-                android:layout_height="47.92dp"
+                android:layout_height="50dp"
                 android:layout_below="@id/etDOB_register"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/rectangle_9"
-                android:hint="Nhập số điện thoại"
+                android:hint="Số điện thoại"
                 android:inputType="phone"
                 android:paddingLeft="20dp"
                 android:fontFamily="@font/inter"/>
@@ -139,7 +140,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:text="Giới tính"
-                    android:textColor="@color/black"
+                    android:textColor="#393737"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/inter"/>
@@ -155,20 +156,22 @@
                         android:id="@+id/rbMale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_weight="1"
                         android:text="Nam"
+                        android:textColor="#393737"
                         android:textSize="20sp"
-                        android:textStyle="bold"
+                        android:layout_marginRight="16dp"
                         android:fontFamily="@font/inter" />
 
                     <RadioButton
                         android:id="@+id/rbFemale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_weight="1"
                         android:text="Nữ"
+                        android:textColor="#393737"
                         android:textSize="20sp"
-                        android:textStyle="bold" android:fontFamily="@font/inter"/>
+                        android:fontFamily="@font/inter"/>
                 </RadioGroup>
             </LinearLayout>
 
@@ -183,16 +186,17 @@
                 android:text="Bằng cách tạo tài khoản, bạn đồng ý với chính sách
 và điều khoản của công ty chúng tôi"
                 android:textColor="@color/black"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:fontFamily="@font/inter"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRegisterr"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_below="@id/policy_register"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/black"
+                    android:backgroundTint="#222020"
                     android:drawableRight="@drawable/arrow_forward"
                     android:fontFamily="@font/inter"
                     android:text="Bắt đầu hành trình"
@@ -200,10 +204,11 @@ và điều khoản của công ty chúng tôi"
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
     <ProgressBar
         android:id="@+id/register_progressbar"
-        android:layout_width="200dip"
-        android:layout_height="200dip"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         />

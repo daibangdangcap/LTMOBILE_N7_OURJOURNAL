@@ -36,8 +36,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:textSize="30dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"
-        />
+        android:textStyle="bold"
+        android:textColor="#D9222020"
+        android:fontFamily="@font/inter"/>
     <Button
         android:id="@+id/ToMap"
         android:layout_width="wrap_content"
