@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ import com.example.journal.Model.FriendsList;
 import com.example.journal.Model.FriendsRequest;
 import com.example.journal.Model.Post;
 import com.example.journal.R;
+import com.example.journal.StarterActivity;
 import com.example.journal.ultils.TranslateAnimation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -83,6 +85,7 @@ public class MainPageFragment extends Fragment {
     FirebaseFirestore db;
     View view;
     PostAdapter postAdapter;
+    ProgressBar mainpage_progressbar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +117,7 @@ public class MainPageFragment extends Fragment {
         lsPost=new ArrayList<>();
         rvlPost=view.findViewById(R.id.rvPost);
         postAdapter=new PostAdapter(lsPost);
+        mainpage_progressbar = view.findViewById(R.id.mainpage_progressbar);
         LoadData();
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         rvlPost.setAdapter(postAdapter);
@@ -203,7 +207,7 @@ public class MainPageFragment extends Fragment {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("remember","false");
                         editor.apply();
-                        Intent i=new Intent(getActivity(),LoginActivity.class);
+                        Intent i=new Intent(getActivity(), StarterActivity.class);
                         startActivity(i);
                         break;
                     case R.id.nav_Map:
@@ -258,8 +262,8 @@ public class MainPageFragment extends Fragment {
                             {
                                 tv_count_friend.setText(Integer.toString(count));
                             }
-                            else {
-                                tv_count_friend.setText("");
+                            else if (count ==0){
+                                tv_count_friend.setText("0");
                             }
                         }
                     }
@@ -280,6 +284,7 @@ public class MainPageFragment extends Fragment {
                         lsPost.add(p);
                     }
                 }
+                mainpage_progressbar.setVisibility(View.GONE);
                 postAdapter.notifyDataSetChanged();
             }
 

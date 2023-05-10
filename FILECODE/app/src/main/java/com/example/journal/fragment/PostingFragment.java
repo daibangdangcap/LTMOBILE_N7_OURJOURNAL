@@ -86,7 +86,8 @@ public class PostingFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID  = user.getUid();
-
+        pbPostingProg = view.findViewById(R.id.pbPostingProg);
+        pbPostingProg.setVisibility(View.GONE);
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -112,6 +113,7 @@ public class PostingFragment extends Fragment {
         btnUpPost_UpPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pbPostingProg.setVisibility(View.VISIBLE);
                 if (!etCaption_UpPost.getText().toString().isEmpty() && !arrayListPickedImg.isEmpty()){
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("blog_images");
                     StorageReference imageFilePath = storageReference.child(pickedImg.getLastPathSegment());
@@ -125,6 +127,7 @@ public class PostingFragment extends Fragment {
                                     Post post = new Post(etCaption_UpPost.getText().toString(), imageDownloadLink,
                                             currentUser.getUid(), fullname,"",0,0);
                                     addPost(post,view);
+                                    pbPostingProg.setVisibility(View.GONE);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

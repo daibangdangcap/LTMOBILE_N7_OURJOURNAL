@@ -4,7 +4,8 @@
     android:layout_height="130dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EEEEEE"
-    android:layout_marginLeft="26dp">
+    android:layout_marginLeft="26dp"
+    >
     <TextView
         android:id="@+id/tvThongBao"
         android:textColor="@color/black"
@@ -23,9 +24,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvThongBao"
-        android:text="Có"
-        android:textColor="#E6393737"
-        android:backgroundTint="@color/white"
+        android:text="Có :("
+        android:textColor="@color/white"
+        android:backgroundTint="#9DC08B"
         app:cornerRadius="10dp"
         android:layout_marginLeft="30dp"
         />
@@ -35,9 +36,9 @@
         android:id="@+id/btnNo"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvThongBao"
-        android:text="Không"
-        android:textColor="#E6393737"
-        android:backgroundTint="@color/white"
+        android:text="Không :)"
+        android:textColor="@color/white"
+        android:backgroundTint="#ED6464"
         app:cornerRadius="10dp"
         android:layout_marginRight="30dp"
         />
